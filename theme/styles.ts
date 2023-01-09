@@ -12,9 +12,8 @@ export const globalStyles = {
       500: "#2B2B2B",
         // Footer Color
       600: "#232323",
-      700: "#02044A",
-      800: "#190793",
-      900: "#11047A",
+      // Footer Right side color
+      700: "#7AA0FF",
     }
   },
   styles: {
