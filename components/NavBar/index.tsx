@@ -4,6 +4,8 @@ import Image from 'next/image'
 import {WalletMultiButton} from '@solana/wallet-adapter-react-ui'
 import NetworkMenu from '../NetworkMenu'
 
+
+
 function NavBar() {
   return (
     <Flex align={"center"} p={4} justify="space-between" borderBottom={"2px"} borderColor = "brand.500" >

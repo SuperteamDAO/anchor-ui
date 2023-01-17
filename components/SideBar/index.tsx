@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 
 function SideBar() {
   return (
-    <VStack h='full' borderRight={"2px"} borderColor="brand.500">
+    <VStack  maxW="7vw" bg='orange' borderRight={"2px"} borderColor="brand.500">
         <Flex flexDir={"column"} align={'center'}>
             <Box>
                 <Image src="assets/idl_icon.svg" alt="IDL Editor Icon" width={24} height={24} />
