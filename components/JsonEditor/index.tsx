@@ -18,11 +18,13 @@ function JsonEditor() {
     onKeyPressUpdate={false}
     locale={locale}
     height="800px"
+    width='700px'
     colors={{
       background: "#151515",
     }}
     style={{
       contentBox: {
+      
         fontSize: "16px",
         fontWeight: "500",
 

@@ -34,7 +34,7 @@ function WalletWrapper({children,endpoint}:WalletWrapperProps) {
              * in the npm package `@solana/wallet-adapter-wallets`.
              */
             new PhantomWalletAdapter(),
-            new UnsafeBurnerWalletAdapter(),
+           
         ],
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [network]

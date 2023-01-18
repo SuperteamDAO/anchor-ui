@@ -14,22 +14,28 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-   
       <Grid
-        gridTemplateColumns={"200px 1fr"}
-        gridTemplateRows="auto 1fr 100px"
+        templateAreas={` 
+        "header header"
+        "nav main"
+        "footer footer"
+
+        `}  
+        gridTemplateColumns={"auto 1fr"}
+        gridTemplateRows="auto 1fr auto"
         >
-      <GridItem colSpan={2} rowSpan={1}>
+      <GridItem area={"header"}>
       <NavBar />
       </GridItem>
 
-    <GridItem colSpan={1}  >
+    <GridItem area={"nav"}   >
     <SideBar />
     </GridItem>
 
-<JsonEditor />
-
-    <GridItem colSpan={1}>
+    <GridItem area={"main"}>
+    <JsonEditor />
+    </GridItem>
+    <GridItem area='footer'>
     <Footer />
     </GridItem>
       </Grid>
