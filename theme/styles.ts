@@ -1,4 +1,5 @@
 import { mode } from "@chakra-ui/theme-tools";
+import "@fontsource/inter"
 
 // If you need a spacing of 40px, divide it by 4. That'll give you 10. Then use it in your component.
 
@@ -26,7 +27,7 @@ export const globalStyles = {
         overflowX: "hidden",
         color: "white",
         bg: "brand.100",
-        fontFamily: "DM Sans",
+        fontFamily: "Inter",
         letterSpacing: "-0.5px",
       },
       input: {
