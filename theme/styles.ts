@@ -1,4 +1,8 @@
 import { mode } from "@chakra-ui/theme-tools";
+
+// If you need a spacing of 40px, divide it by 4. That'll give you 10. Then use it in your component.
+
+
 export const globalStyles = {
   colors: {
     brand: {

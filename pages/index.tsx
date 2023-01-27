@@ -13,8 +13,12 @@ import { useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+
+  
+
   return (
-      <Grid
+   <div>
+       <Grid
         templateAreas={` 
         "header header"
         "nav main"
@@ -39,6 +43,7 @@ export default function Home() {
     <Footer />
     </GridItem>
       </Grid>
+   </div>
   
   );
 }

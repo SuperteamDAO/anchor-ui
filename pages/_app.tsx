@@ -9,10 +9,12 @@ export default function App({ Component, pageProps }: AppProps) {
   const endpoint = "https://api.devnet.solana.com"
   
   return (
-    <ChakraProvider theme={theme}>
+    <div>
+      <ChakraProvider theme={theme}>
       <WalletWrapper endpoint={endpoint}>
       <Component {...pageProps} />
       </WalletWrapper>
     </ChakraProvider>
+    </div>
   )
 }
