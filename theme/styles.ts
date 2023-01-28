@@ -19,6 +19,9 @@ export const globalStyles = {
       600: "#232323",
       // Footer Right side color
       700: "#7AA0FF",
+
+      //Blue Border Color
+      800: "#4A83EE"
     }
   },
   styles: {
