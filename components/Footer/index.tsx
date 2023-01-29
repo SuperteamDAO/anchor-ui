@@ -4,7 +4,7 @@ import Image from "next/image"
 
 function Footer() {
   return (
-    <Flex align="center" backgroundColor={"#232323"}  w='100vw' h='5vh' justify={"space-between"}>
+    <Flex align="center"  backgroundColor={"#232323"}  w='100vw' h='5vh' justify={"space-between"}>
         <Flex bg="brand.700" justify={"center"} w='10vw' align='center' h='full'>
             <Image src='/assets/globe.svg' alt="Network Icon" width={20} height={20} />
 

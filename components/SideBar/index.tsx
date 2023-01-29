@@ -1,48 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { VStack, Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const routes = [
   {
     name: "IDL",
-    img:"/assets/idl_icon.svg"
+    img: "/assets/idl_icon.svg",
+    route: "/",
   },
   {
     name: "Test",
-    img:"/assets/test.png"
+    img: "/assets/test.png",
+    route: "/test",
   },
   {
     name: "Docs",
-    img:"/assets/docs_icon.svg"
+    img: "/assets/docs_icon.svg",
+    route: "/docs",
   },
 ];
 
 function SideBar() {
+  const router = useRouter();
+
   return (
     <VStack h="full" borderRight={"2px"} borderColor="brand.500">
-      {
-        routes.map((route) => {
-          return (
-            <Flex w={'full'}  key={route.name} p={6} flexDir={"column"} justify="center" align={"center"}
-            _hover={{
-              backgroundColor:"#232323",
-              borderLeftColor:"#4A83EE",
-              borderLeft:"2px"
+      {routes.map((route) => {
+        return (
+          <Flex
+            w={"100%"}
+            sx={
+              router.pathname === route.route
+                ? {
+                    backgroundColor: "#232323",
+                    borderLeftColor: "#4A83EE",
+                    borderLeft: "2px",
+                  }
+                : {}
+            }
+            key={route.route}
+            p={6}
+            flexDir={"column"}
+            justify="center"
+            align={"center"}
+      
+            _active={{
+              backgroundColor: "#232323",
+              borderLeftColor: "#4A83EE",
+              borderLeft: "2px",
             }}
-            >
-            <Image
-              src={route.img}
-              alt="IDL Editor Icon"
-              width={24}
-              height={24}
-            />
-            <Text fontSize={"md"}>{route.name}</Text>
+          >
+            <Link href={route.route}>
+              <Image
+                src={route.img}
+                alt="IDL Editor Icon"
+                width={24}
+                height={24}
+              />
+              <Text fontSize={"md"}>{route.name}</Text>
+            </Link>
           </Flex>
-          )
-        })
-      }
-   
+        );
+      })}
     </VStack>
   );
 }

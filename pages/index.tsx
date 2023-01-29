@@ -8,43 +8,13 @@ import SideBar from "../components/SideBar";
 import JsonEditor from "../components/JsonEditor";
 
 import { useState } from "react";
+import OnChainData from "../components/OnChainData";
+import FunctionStack from "../components/FunctionStack";
 
 export default function Home() {
   return (
-    <div>
-      <Grid
-        templateAreas={` 
-        "header header header"
-        "nav main data"
-        "footer footer footer"
-
-        `}
-        gridTemplateColumns={"6vw 1fr "}
-        gridTemplateRows="auto 1fr auto"
-      >
-        <GridItem area={"header"}>
-          <NavBar />
-        </GridItem>
-
-        <GridItem area={"nav"}>
-          <SideBar />
-        </GridItem>
-
-        <GridItem area={"main"}>
-          <JsonEditor />
-        </GridItem>
-
-        <GridItem area="data">
-          <Box>
-            <Heading>This is where things happends</Heading>
-          </Box>
-        </GridItem>
-
-       
-        <GridItem area="footer">
-          <Footer />
-        </GridItem>
-      </Grid>
-    </div>
+    
+      <JsonEditor />
+    
   );
 }

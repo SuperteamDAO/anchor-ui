@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import JSONInput from "react-json-editor-ajrm";
 import locale from "../../lib/en";
+import {Box} from "@chakra-ui/react"
 
 function JsonEditor() {
     const [inputData, setinputData] = useState({
@@ -9,7 +10,8 @@ function JsonEditor() {
         instructions: [],
       });
   return (
-    <JSONInput
+    <Box height={'100%'}>
+       <JSONInput
     onChange={(v: { jsObject: any }) => console.log("OUTPUT", v)}
     id="idleditor"
     waitAfterKeyPress={200}
@@ -17,8 +19,7 @@ function JsonEditor() {
     confirmGood={false}
     onKeyPressUpdate={false}
     locale={locale}
-    height="800px"
-    width='700px'
+    
     colors={{
       background: "#151515",
     }}
@@ -34,6 +35,7 @@ function JsonEditor() {
       },
     }}
   />
+    </Box>
   )
 }
 
