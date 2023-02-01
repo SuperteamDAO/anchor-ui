@@ -114,7 +114,20 @@ const NavBar: FC<ButtonProps> = ({ children, disabled, onClick, ...props }) => {
                 ) : (
                   <VStack gap={4}>
                     <Text>{publicKey.toBase58()}</Text>
-                    <Button onClick={disconnect}>disconnect wallet</Button>
+                    <Button onClick={disconnect}
+                      fontSize="md"
+                      borderRadius="none"
+                      width={44}
+                      backgroundColor={"brand.600"}
+                      _hover={{
+                        backgroundColor: "#282828 ",
+                        color: "white",
+                      }}
+                      _active={{
+                        backgroundColor: "#1f1f1f",
+                        color: "white",
+                      }}>Disconnect Wallet
+                    </Button>
                   </VStack>
                 )}
               </VStack>
