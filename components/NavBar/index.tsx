@@ -15,12 +15,13 @@ import {
   Box,
   Button,
   Text,
+  VStack
 } from "@chakra-ui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PhantomWalletName } from "@solana/wallet-adapter-phantom";
 
 const NavBar: FC<ButtonProps> = ({ children, disabled, onClick, ...props }) => {
-  const { wallet, connect, connecting, connected, wallets, select } = useWallet();
+  const { publicKey, disconnect, wallet, connect, connecting, connected, wallets, select } = useWallet();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback(
 
@@ -77,48 +78,46 @@ const NavBar: FC<ButtonProps> = ({ children, disabled, onClick, ...props }) => {
           <MenuList borderColor={"brand.600"} bg={"brand.600"} color={"white"}>
             <MenuItem borderColor={"brand.600"} bg={"brand.600"} color={"white"}>
 
-              <Flex direction={'column'}>
-                {wallets.filter(
-                  (wallet) => wallet.readyState === "Installed"
-                ).length > 0 ? (
-                  wallets
-                    .filter((wallet) => wallet.readyState === "Installed")
-                    .map((wallet) => (
+              <VStack gap={4} mt={2}>
+                {/* <Heading>Solana Custom Wallet UI example (Chakra UI)</Heading> */}
 
-                      <Button
-                        color="white"
-                        bg={"brand.600"}
-                        key={wallet.adapter.name}
-                        onClick={handleClick}
-                        _hover={{
-                          backgroundColor: "#282828 ",
-                          color: "white",
-                        }}
-                        _active={{
-                          backgroundColor: "#1f1f1f",
-                          color: "white",
-                        }}
-                        width={44}
-                        leftIcon={
-                          <img
-                            src={wallet.adapter.icon}
-                            alt={wallet.adapter.name}
-                            className={styles.walletIcon}
-                          />
-                        }
-                      >
-                        <Text>{wallet.adapter.name}</Text>
-                      </Button>
-                    ))
+                {!publicKey ? (
+                  <VStack>
+                    {wallets
+                      .filter((wallet) => wallet.readyState === "Installed")
+                      .map((wallet) => (
+                        <Button
+                          key={wallet.adapter.name}
+                          onClick={() => select(wallet.adapter.name)}
+                          fontSize="md"
+                          borderRadius="none"
+                          width={44}
+                          backgroundColor={"brand.600"}
+                          leftIcon={
+                            <img src={wallet.adapter.icon}
+                              width={'25px'}
+                              height={'25px'}></img>
+                          }
+                          _hover={{
+                            backgroundColor: "#282828 ",
+                            color: "white",
+                          }}
+                          _active={{
+                            backgroundColor: "#1f1f1f",
+                            color: "white",
+                          }}
+                        >
+                          {wallet.adapter.name}
+                        </Button>
+                      ))}
+                  </VStack>
                 ) : (
-                  <>
-                    <Text mx={4} textAlign="center">
-                      Looks like you don&apos;t have a Solana wallet
-                      installed.
-                    </Text>
-                  </>
+                  <VStack gap={4}>
+                    <Text>{publicKey.toBase58()}</Text>
+                    <Button onClick={disconnect}>disconnect wallet</Button>
+                  </VStack>
                 )}
-              </Flex>
+              </VStack>
             </MenuItem>
           </MenuList>
         </Menu>
