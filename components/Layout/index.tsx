@@ -41,7 +41,7 @@ function Layout({ children }: layoutProps) {
                 <GridItem
                     justifySelf={"flex-end"}
                     area="footer"
-                    position="sticky"
+                    position="fixed"
                     bottom={0}
                 >
                     <Footer />
