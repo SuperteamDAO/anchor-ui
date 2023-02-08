@@ -34,7 +34,7 @@ function Layout({ children }: layoutProps) {
           <OnChainData />
           {/* <FunctionStack /> */}
         </GridItem>
-        <GridItem justifySelf={"flex-end"} area="footer">
+        <GridItem justifySelf={"flex-end"} area="footer" position="fixed" bottom={0}>
           <Footer />
         </GridItem>
       </Grid>
