@@ -59,8 +59,6 @@ function NetworkMenu() {
   },[network])
 
 
-
-
   return (
     <Box px={4}>
       <Menu>
