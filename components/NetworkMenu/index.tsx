@@ -52,14 +52,10 @@ function NetworkMenu() {
     setName(name?.value)
   }
 
-
   useEffect(() => {
     console.log("NETWORK",network);
     updateNetworkName(network)
   },[network])
-
-
-
 
   return (
     <Box px={4}>
