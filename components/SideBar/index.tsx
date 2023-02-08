@@ -29,30 +29,24 @@ function SideBar() {
     <VStack h="full" borderRight={"2px"} borderColor="brand.500">
       {routes.map((route) => {
         return (
-          <Flex
-            w={"100%"}
-            sx={
-              router.pathname === route.route
-                ? {
-                    backgroundColor: "#232323",
-                    borderLeftColor: "#4A83EE",
-                    borderLeft: "2px",
-                  }
-                : {}
-            }
-            key={route.route}
-            p={6}
-            flexDir={"column"}
-            justify="center"
-            align={"center"}
-      
-            _active={{
-              backgroundColor: "#232323",
-              borderLeftColor: "#4A83EE",
-              borderLeft: "2px",
-            }}
-          >
-            <Link href={route.route}>
+          <Link key={route.route} href={route.route}>
+            <Flex
+              w={"100%"}
+              sx={
+                router.pathname === route.route
+                  ? {
+                      backgroundColor: "#232323",
+                      borderLeftColor: "#4A83EE",
+                      borderLeft: "2px",
+                    }
+                  : {}
+              }
+              p={6}
+              flexDir={"column"}
+              justify="center"
+              align={"center"}
+   
+            >
               <Image
                 src={route.img}
                 alt="IDL Editor Icon"
@@ -60,8 +54,8 @@ function SideBar() {
                 height={24}
               />
               <Text fontSize={"md"}>{route.name}</Text>
-            </Link>
-          </Flex>
+            </Flex>
+          </Link>
         );
       })}
     </VStack>
