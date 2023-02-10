@@ -12,9 +12,5 @@ import OnChainData from "../components/OnChainData";
 import FunctionStack from "../components/FunctionStack";
 
 export default function Home() {
-  return (
-    
-      <JsonEditor />
-    
-  );
+  return <JsonEditor />;
 }
