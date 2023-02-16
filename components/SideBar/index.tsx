@@ -45,7 +45,6 @@ function SideBar() {
               flexDir={"column"}
               justify="center"
               align={"center"}
-   
             >
               <Image
                 src={route.img}

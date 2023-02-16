@@ -13,6 +13,7 @@ import OnChainData from "../components/OnChainData";
 import FunctionStack from "../components/FunctionStack";
 
 export default function Home() {
+
   return (
     <Box>
       <ProgramIdInput />
@@ -20,4 +21,5 @@ export default function Home() {
     </Box>
     
   );
+
 }

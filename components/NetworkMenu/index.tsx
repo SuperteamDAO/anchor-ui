@@ -31,35 +31,29 @@ const NetworkList = [
 ];
 
 function NetworkMenu() {
-
-  const setNetwork = useNetworkStore((state) => state.setNetwork)
+  const setNetwork = useNetworkStore((state) => state.setNetwork);
   const network = useNetworkStore((state) => state.network);
-  const [name,setName] = useState(NetworkList[1].value);
+  const [name, setName] = useState(NetworkList[1].value);
 
   const updateNetworkName = (uri: string) => {
-    
-    const name = NetworkList.find(network => {
-      if(network.uri == uri){
-        return network.value
+    const name = NetworkList.find((network) => {
+      if (network.uri == uri) {
+        return network.value;
       }
     });
 
-    if(name === undefined){
-      console.log("THIS IS UNDEFINED")
+    if (name === undefined) {
+      console.log("THIS IS UNDEFINED");
       return;
     }
 
-    setName(name?.value)
-  }
-
+    setName(name?.value);
+  };
 
   useEffect(() => {
-    console.log("NETWORK",network);
-    updateNetworkName(network)
-  },[network])
-
-
-
+    console.log("NETWORK", network);
+    updateNetworkName(network);
+  }, [network]);
 
   return (
     <Box px={4}>
@@ -92,13 +86,9 @@ function NetworkMenu() {
         <MenuList borderColor={"brand.600"} bg={"brand.600"} color={"white"}>
           {NetworkList.map((network) => (
             <MenuItem
-
-              onClick = {
-                () => {
-                  setNetwork(network.uri)
-                }
-              }
-
+              onClick={() => {
+                setNetwork(network.uri);
+              }}
               bg={"brand.600"}
               _hover={{
                 backgroundColor: "#282828 ",
