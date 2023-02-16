@@ -29,14 +29,14 @@ function SideBar() {
     <VStack h="full" borderRight={"2px"} borderColor="brand.500">
       {routes.map((route) => {
         return (
-          <Link key={route.route} href={route.route}>
+          <Link key={route.route} href={route.route} style={{ width: "100%" }}>
             <Flex
               w={"100%"}
               sx={
                 router.pathname === route.route
                   ? {
                       backgroundColor: "#232323",
-                      borderLeftColor: "#4A83EE",
+                      borderColor: "#4A83EE !important",
                       borderLeft: "2px",
                     }
                   : {}
