@@ -13,12 +13,18 @@ interface NetworkState {
 }
 
 export const useNetworkStore = create<NetworkState>((set) => ({
-  network: Networks.devnet,
-  setNetwork: (network) => set({ network: network }),
-}));
+    network: Networks.devnet ,
+    setNetwork: (network) => set({network: network})
+}))
 
-export const useIDLStore = create((set) => ({
-  idl: JSON,
-  // Possibly add a Parsing Logic
-  setIDL: (data: any) => set({ idl: data }),
-}));
+interface IDLStore {
+    idl:any,
+    setIdl: (data:any) => void
+}
+
+
+export const useIDLStore = create<IDLStore>((set) => ({
+    idl: null,
+    // Possibly add a Parsing Logic
+    setIdl: (data:any) => set({idl:data})
+}))

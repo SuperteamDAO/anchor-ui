@@ -1,19 +1,11 @@
-import React, { Children, useMemo } from "react";
+import React, { Children, useMemo } from 'react'
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
 import {
-  ConnectionProvider,
-  WalletProvider,
-} from "@solana/wallet-adapter-react";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import {
-  PhantomWalletAdapter,
-  UnsafeBurnerWalletAdapter,
-} from "@solana/wallet-adapter-wallets";
-import {
-  WalletModalProvider,
-  WalletDisconnectButton,
-  WalletMultiButton,
-} from "@solana/wallet-adapter-react-ui";
-require("@solana/wallet-adapter-react-ui/styles.css");
+    WalletModalProvider,
+} from '@solana/wallet-adapter-react-ui';
+require('@solana/wallet-adapter-react-ui/styles.css');
 
 type WalletWrapperProps = {
   children: React.ReactNode;
