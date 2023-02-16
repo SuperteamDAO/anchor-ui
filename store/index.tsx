@@ -29,3 +29,15 @@ export const useIDLStore = create<IDLStore>((set) => ({
     // Possibly add a Parsing Logic
     setIdl: (data:any) => set({idl:data})
 }))
+
+
+interface ProgramId {
+    programId: string,
+    setProgramId: (id:string) => void
+
+}
+
+export const useProgramId = create<ProgramId>((set) => ({
+    programId:"",
+    setProgramId: (id: string) => set({programId: id})
+}))
