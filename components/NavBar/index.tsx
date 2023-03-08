@@ -1,8 +1,15 @@
 import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import Image from "next/image";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+
 import NetworkMenu from "../NetworkMenu";
+import dynamic from "next/dynamic";
+
+const WalletMultiButtonDynamic = dynamic(
+  async () =>
+    (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
+  { ssr: false }
+);
 
 function NavBar() {
   return (
@@ -23,7 +30,7 @@ function NavBar() {
       </Box>
       <Flex align={"center"}>
         <NetworkMenu />
-        <WalletMultiButton />
+        <WalletMultiButtonDynamic />
       </Flex>
     </Flex>
   );

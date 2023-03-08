@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 import Image from "next/image";
+import { NetworkList } from "../NetworkMenu";
+import { useNetworkStore } from "../../store";
 
 function Footer() {
+  const network = useNetworkStore((state) => state.network);
+  const [name, setName] = useState(NetworkList[1].value);
+
+  const updateNetworkName = (uri: string) => {
+    const name = NetworkList.find((network) => {
+      if (network.uri == uri) {
+        return network.value;
+      }
+    });
+
+    if (name === undefined) {
+      console.log("THIS IS UNDEFINED");
+      return;
+    }
+
+    setName(name?.value);
+  };
+
+  useEffect(() => {
+    console.log("NETWORK", network);
+    updateNetworkName(network);
+  }, [network]);
   return (
     <Flex
       align="center"
@@ -19,8 +43,14 @@ function Footer() {
           height={20}
         />
 
-        <Text px={1} textColor={"black"} fontSize="sm">
-          MAINNET-BETA
+        <Text
+          px={1}
+          textTransform="uppercase"
+          fontWeight="bold"
+          textColor={"black"}
+          fontSize="sm"
+        >
+          {name}
         </Text>
       </Flex>
       <Flex px={4} align="center" justify="space-between" w="full">

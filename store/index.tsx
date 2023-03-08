@@ -13,31 +13,27 @@ interface NetworkState {
 }
 
 export const useNetworkStore = create<NetworkState>((set) => ({
-    network: Networks.devnet ,
-    setNetwork: (network) => set({network: network})
-}))
+  network: Networks.devnet,
+  setNetwork: (network) => set({ network: network }),
+}));
 
 interface IDLStore {
-    idl:any,
-    setIdl: (data:any) => void
+  idl: any;
+  setIdl: (data: any) => void;
 }
 
-
 export const useIDLStore = create<IDLStore>((set) => ({
-    idl: null,
-    // Possibly add a Parsing Logic
-    setIdl: (data:any) => set({idl:data})
-}))
-
+  idl: null,
+  // Possibly add a Parsing Logic
+  setIdl: (data: any) => set({ idl: data }),
+}));
 
 interface ProgramId {
-    programId: string,
-    setProgramId: (id:string) => void
-
+  programId: string;
+  setProgramId: (id: string) => void;
 }
 
 export const useProgramId = create<ProgramId>((set) => ({
-    programId:"",
-    setProgramId: (id: string) => set({programId: id})
-}))
-
+  programId: "",
+  setProgramId: (id: string) => set({ programId: id }),
+}));

@@ -15,9 +15,9 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Networks, useNetworkStore } from "../../store";
 import Image from "next/image";
 
-const NetworkList = [
+export const NetworkList = [
   {
-    value: "Mainnet",
+    value: "Mainnet-Beta",
     uri: Networks.mainnet,
   },
   {
