@@ -1,7 +1,8 @@
 import React from "react";
+import { Box } from "@chakra-ui/react";
 
 function Test() {
-  return <div>Test</div>;
+  return <Box p={4}></Box>;
 }
 
 export default Test;
