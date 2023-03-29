@@ -24,6 +24,7 @@ const routes = [
 
 function SideBar() {
   const router = useRouter();
+  // TODO: Add transition to sidebar it's kind of rough
 
   return (
     <VStack h="full" borderRight={"2px"} borderColor="brand.500">

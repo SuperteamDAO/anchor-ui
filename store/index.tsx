@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import * as anchor from "@coral-xyz/anchor";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 export enum Networks {
@@ -36,4 +37,14 @@ interface ProgramId {
 export const useProgramId = create<ProgramId>((set) => ({
   programId: "",
   setProgramId: (id: string) => set({ programId: id }),
+}));
+
+interface Program {
+  program?: anchor.Program;
+  setProgram: (program: anchor.Program) => void;
+}
+
+export const useProgram = create<Program>((set) => ({
+  program: undefined,
+  setProgram: (program: anchor.Program) => set({ program: program }),
 }));

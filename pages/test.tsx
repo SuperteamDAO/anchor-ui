@@ -1,8 +1,25 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Center, Heading } from "@chakra-ui/react";
+import { useProgram } from "../store";
+import TestContainer from "../components/TestContainer";
 
 function Test() {
-  return <Box p={4}></Box>;
+  const program = useProgram((state) => state.program);
+
+  console.log("PROGRAM IN TEST", program);
+  if (program === undefined) {
+    return (
+      <Center p={4}>
+        <Heading color={"gray.200"}>No Program Found</Heading>
+      </Center>
+    );
+  } else {
+    return (
+      <Box p={4}>
+        <TestContainer program={program} />
+      </Box>
+    );
+  }
 }
 
 export default Test;

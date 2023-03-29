@@ -10,6 +10,7 @@ function JsonEditor() {
   console.log("SEE IDL", idl);
   const setIdl = useIDLStore((state) => state.setIdl);
 
+  // TODO: Use Zod for Validating the JSON Input
   return (
     <JSONInput
       onChange={(v: { jsObject: any }) => {

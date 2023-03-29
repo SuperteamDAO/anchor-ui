@@ -16,12 +16,18 @@ import JsonEditor from "../components/JsonEditor";
 import ProgramIdInput from "../components/ProgramIdInput";
 import * as anchor from "@coral-xyz/anchor";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
-import { useNetworkStore, useProgramId, useIDLStore } from "../store";
+import {
+  useNetworkStore,
+  useProgramId,
+  useIDLStore,
+  useProgram,
+} from "../store";
 import { useState } from "react";
 
 export default function Home() {
   const network = useNetworkStore((state) => state.network);
   const programId = useProgramId((state) => state.programId);
+  const setGlobalProgram = useProgram((state) => state.setProgram);
   const idl = useIDLStore((state) => state.idl);
   const anchorWallet = useAnchorWallet();
   const toast = useToast();
@@ -101,6 +107,7 @@ export default function Home() {
     const program = new anchor.Program(idl, programId, provider);
 
     setProgram(program);
+    setGlobalProgram(program);
     toast({
       title: "Program Set",
       description: "Check out the Test's Tab",
