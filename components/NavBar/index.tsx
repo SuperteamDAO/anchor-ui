@@ -97,7 +97,7 @@ const NavBar: FC<ButtonProps> = ({ children, disabled, onClick, ...props }) => {
             }}
           >
             <Flex gap={2} justify="center" align="center">
-              {connected && (
+              {wallet && connected && (
                 <img
                   src={wallet.adapter.icon}
                   width={"25px"}
