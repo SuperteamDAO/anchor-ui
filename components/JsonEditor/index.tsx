@@ -22,6 +22,8 @@ function JsonEditor() {
       waitAfterKeyPress={200}
       placeholder={idl}
       confirmGood={false}
+      width="100%"
+      height="93vh"
       onKeyPressUpdate={true}
       locale={locale}
       colors={{
