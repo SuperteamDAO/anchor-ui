@@ -11,10 +11,15 @@ import {
 } from "@chakra-ui/react";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import DataHeader from "../DataHeader";
+import { useProgram } from "../../store";
 
 const tabs = ["raffler", "ticket", "raffle"];
 
 function OnChainData() {
+  const program = useProgram((state) => state.program);
+
+  console.log("PROGRAM IN OnChain Data", program?.idl.accounts);
+
   return (
     <VStack borderColor="brand.500">
       <DataHeader
@@ -24,22 +29,26 @@ function OnChainData() {
         actionText="Refresh"
         actionIcon="/assets/refresh.svg"
       />
-      <Tabs isFitted width={"100%"}>
-        <TabList>
-          {tabs.map((tab) => {
-            return (
-              <Tab
-                _active={{ background: "transparent" }}
-                _selected={{ borderColor: "brand.800" }}
-                borderColor="brand.500"
-                key={tab}
-              >
-                {tab}
-              </Tab>
-            );
-          })}
-        </TabList>
-      </Tabs>
+      {program?.idl.accounts === undefined ? (
+        <div>No Accounts Found</div>
+      ) : (
+        <Tabs isFitted width={"100%"}>
+          <TabList>
+            {program?.idl.accounts.map((account) => {
+              return (
+                <Tab
+                  _active={{ background: "transparent" }}
+                  _selected={{ borderColor: "brand.800" }}
+                  borderColor="brand.500"
+                  key={account.name}
+                >
+                  {account.name}
+                </Tab>
+              );
+            })}
+          </TabList>
+        </Tabs>
+      )}
       <Flex
         py={2}
         borderBottom={"2px"}
