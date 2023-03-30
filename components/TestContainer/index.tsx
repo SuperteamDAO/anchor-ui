@@ -24,7 +24,14 @@ function TestContainer({ program }: TestContainerType) {
       >
         {idl.name !== undefined ? idl.name : "Unnamed"} -{" "}
       </Text>
-      <VStack pt={4} spacing={4}>
+      <VStack
+        maxH={"86vh"}
+        pt={4}
+        pb={20}
+        spacing={4}
+        overflowY="scroll"
+        css={{ "&::-webkit-scrollbar": { display: "none" } }}
+      >
         {idl.instructions.map((instruction, index) => {
           return <TestBox instruction={instruction} key={index} />;
         })}

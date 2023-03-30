@@ -23,8 +23,87 @@ interface IDLStore {
   setIdl: (data: any) => void;
 }
 
+const idl = {
+  version: "0.1.0",
+  name: "dummy",
+  instructions: [
+    {
+      name: "setData",
+      accounts: [
+        {
+          name: "authority",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "storageAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "text",
+          type: "string",
+        },
+      ],
+    },
+    {
+      name: "changeText",
+      accounts: [
+        {
+          name: "authority",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "storageAccount",
+          isMut: true,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "text",
+          type: "string",
+        },
+      ],
+    },
+  ],
+  accounts: [
+    {
+      name: "Storage",
+      type: {
+        kind: "struct",
+        fields: [
+          {
+            name: "authority",
+            type: "publicKey",
+          },
+          {
+            name: "text",
+            type: "string",
+          },
+          {
+            name: "no",
+            type: "u64",
+          },
+        ],
+      },
+    },
+  ],
+  metadata: {
+    address: "28CDRWqCXVRyibawAucbTDYe3RQthce7zG6Bizv16FYr",
+  },
+};
+
 export const useIDLStore = create<IDLStore>((set) => ({
-  idl: null,
+  idl: idl,
   // Possibly add a Parsing Logic
   setIdl: (data: any) => set({ idl: data }),
 }));
@@ -35,7 +114,7 @@ interface ProgramId {
 }
 
 export const useProgramId = create<ProgramId>((set) => ({
-  programId: "",
+  programId: "28CDRWqCXVRyibawAucbTDYe3RQthce7zG6Bizv16FYr",
   setProgramId: (id: string) => set({ programId: id }),
 }));
 

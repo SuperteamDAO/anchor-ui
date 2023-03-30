@@ -14,6 +14,7 @@ const WalletMultiButtonDynamic = dynamic(
 function NavBar() {
   return (
     <Flex
+      as="nav"
       align={"center"}
       p={4}
       justify="space-between"

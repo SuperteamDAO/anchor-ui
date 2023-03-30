@@ -20,7 +20,7 @@ function Layout({ children }: layoutProps) {
 
         `}
         gridTemplateColumns={"6vw 2fr 1.5fr"}
-        gridTemplateRows="auto 90vh 5vh"
+        gridTemplateRows="9vh 86vh 5vh"
       >
         <GridItem area={"header"}>
           <NavBar />
