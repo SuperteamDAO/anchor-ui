@@ -1,17 +1,33 @@
-import React from "react";
-import { Flex, Box } from "@chakra-ui/react";
+import React, {
+  FC,
+  useEffect,
+  useState,
+  useMemo,
+  Children,
+  MouseEventHandler,
+  useCallback,
+} from "react";
 import Image from "next/image";
-
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import NetworkMenu from "../NetworkMenu";
-import dynamic from "next/dynamic";
+import styles from "styles/Home.module.css";
+import {
+  ButtonProps,
+  forwardRef,
+  Menu,
+  MenuButton,
+  Avatar as ChakraAvatar,
+  MenuList,
+  MenuItem,
+  Flex,
+  Box,
+  Button,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import WalletDropdown from "../WalletDropdown";
 
-const WalletMultiButtonDynamic = dynamic(
-  async () =>
-    (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
-  { ssr: false }
-);
-
-function NavBar() {
+const NavBar: FC<ButtonProps> = ({ children, disabled, onClick, ...props }) => {
   return (
     <Flex
       as="nav"
@@ -31,10 +47,10 @@ function NavBar() {
       </Box>
       <Flex align={"center"}>
         <NetworkMenu />
-        <WalletMultiButtonDynamic />
+        <WalletDropdown />
       </Flex>
     </Flex>
   );
-}
+};
 
 export default NavBar;
