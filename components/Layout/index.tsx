@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import NavBar from "../NavBar";
 import SideBar from "../SideBar";
 import Footer from "../Footer";
@@ -9,18 +16,40 @@ type layoutProps = {
   children: JSX.Element;
 };
 
+const gridAreas = {
+  base: `
+    "header"
+    "main"
+    "data"
+    "footer"
+  `,
+  md: `
+    "header header header"
+    "nav main data"
+    "footer footer footer"
+  `,
+};
+
+const gridColumns = {
+  base: "1fr",
+  md: "6vw 2fr 1.5fr",
+};
+
+const gridRows = {
+  base: "9vh 1fr 1fr 5vh",
+  md: "9vh 86vh 5vh",
+};
+
 function Layout({ children }: layoutProps) {
+  const gridTemplateAreas = useBreakpointValue(gridAreas);
+  const gridTemplateColumns = useBreakpointValue(gridColumns);
+  const gridTemplateRows = useBreakpointValue(gridRows);
   return (
     <div>
       <Grid
-        templateAreas={` 
-        "header header header"
-        "nav main data"
-        "footer footer footer"
-
-        `}
-        gridTemplateColumns={"6vw 2fr 1.5fr"}
-        gridTemplateRows="9vh 86vh 5vh"
+        templateAreas={gridTemplateAreas}
+        gridTemplateColumns={gridTemplateColumns}
+        gridTemplateRows={gridTemplateRows}
       >
         <GridItem area={"header"}>
           <NavBar />

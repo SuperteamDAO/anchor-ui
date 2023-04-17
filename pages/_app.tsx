@@ -5,6 +5,7 @@ import WalletWrapper from "../components/Wallet/WalletWrapper";
 import Layout from "../components/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
+  // TODO: Make it Dynamic
   const endpoint = "https://api.devnet.solana.com";
 
   return (

@@ -121,8 +121,9 @@ export default function Home() {
   return (
     <Box>
       <ProgramIdInput />
-      <Box pos="relative">
+      <Box pos="relative" w={"full"} h="full">
         <Button
+          zIndex={"1000"}
           w="24"
           onClick={getProgram}
           isLoading={isLoading}

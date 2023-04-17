@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import JSONInput from "react-json-editor-ajrm";
 import locale from "../../lib/en";
-
-import { Box } from "@chakra-ui/react";
 import { useIDLStore } from "../../store";
 
 function JsonEditor() {
