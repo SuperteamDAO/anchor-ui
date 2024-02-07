@@ -25,6 +25,7 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { toast } from "./ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -66,52 +67,49 @@ export function SettingsBtn() {
       <DialogContent className="">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
-          <p className="text-lg">RPC Endpoint</p>
+
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-2/3 space-y-6"
             >
               <FormField
-              control={form.control}
-              name="clusterSlug"
-              render={({field}) => ()}}
-               />
-              <RadioGroup
-                onChange={handler}
-                defaultValue={clusterSlug(cluster)}
-              >
-                {CLUSTERS.map((cluster) => {
-                  const slug = clusterSlug(cluster);
-                  const name = clusterName(cluster);
-                  return (
-                    <div key={cluster} className="flex items-center space-x-2">
-                      <RadioGroupItem value={slug} id={slug} />
-                      <Label htmlFor={slug}>{name}</Label>
-                    </div>
-                  );
-                })}
-              </RadioGroup>
+                control={form.control}
+                name="clusterSlug"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormLabel className="text-lg">RPC Endpoint</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        {CLUSTERS.map((cluster) => {
+                          const slug = clusterSlug(cluster);
+                          const name = clusterName(cluster);
+                          return (
+                            <FormItem
+                              key={cluster}
+                              className="flex items-center space-x-2"
+                            >
+                              <FormControl>
+                                <RadioGroupItem value={slug} id={slug} />
+                              </FormControl>
+                              <Label htmlFor={slug}>{name}</Label>
+                            </FormItem>
+                          );
+                        })}
+                      </RadioGroup>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Submit</Button>
             </form>
           </Form>
         </DialogHeader>
       </DialogContent>
     </Dialog>
   );
-}
-function zodResolver(
-  FormSchema: z.ZodObject<
-    { clusterSlug: z.ZodEnum<["mainnet-beta", "testnet", "devnet", "custom"]> },
-    "strip",
-    z.ZodTypeAny,
-    { clusterSlug: "custom" | "mainnet-beta" | "testnet" | "devnet" },
-    { clusterSlug: "custom" | "mainnet-beta" | "testnet" | "devnet" }
-  >
-):
-  | import("react-hook-form").Resolver<
-      { clusterSlug: "custom" | "mainnet-beta" | "testnet" | "devnet" },
-      any
-    >
-  | undefined {
-  throw new Error("Function not implemented.");
 }
