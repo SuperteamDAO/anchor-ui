@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { WalletConnect } from "./WalletConnect";
 import { ModeToggle } from "./ColorModeToggle";
+import { SettingsBtn } from "./SettingsBtn";
 
 function NavItems() {
   return (
@@ -43,6 +44,7 @@ function Header() {
         {/* Add a Component similar to the Jupiter website to change ENVs and RPC
         Urls */}
         <ModeToggle />
+        <SettingsBtn />
         <WalletConnect />
       </div>
     </div>

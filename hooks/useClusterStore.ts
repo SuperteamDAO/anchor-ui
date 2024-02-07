@@ -26,6 +26,22 @@ export function clusterSlug(cluster: Cluster): string {
   }
 }
 
+// slug to cluster
+export function slugToCluster(slug: string): Cluster {
+  switch (slug) {
+    case "mainnet-beta":
+      return Cluster.MainnetBeta;
+    case "testnet":
+      return Cluster.Testnet;
+    case "devnet":
+      return Cluster.Devnet;
+    case "custom":
+      return Cluster.Custom;
+    default:
+      return Cluster.Devnet;
+  }
+}
+
 export function clusterName(cluster: Cluster): string {
   switch (cluster) {
     case Cluster.MainnetBeta:
@@ -49,12 +65,14 @@ export interface RpcStore {
   cluster: Cluster;
   customRpc: string;
   setCustomCluster: (uri: string) => void;
+  setCluster: (cluster: Cluster) => void;
 }
 
 const initialState: RpcStore = {
   cluster: DEFAULT_CLUSTER,
   customRpc: "",
   setCustomCluster: (uri: string) => {},
+  setCluster: (cluster: Cluster) => {},
 };
 
 export const useClusterStore = create<RpcStore>((set, get) => ({

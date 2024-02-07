@@ -2,6 +2,7 @@
 
 import { Providers } from "@/providers/Providers";
 import Header from "./Header";
+import { Toaster } from "./ui/toaster";
 
 export function Client({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export function Client({ children }: { children: React.ReactNode }) {
           <Header />
           {children}
         </div>
+        <Toaster />
       </Providers>
     </div>
   );
