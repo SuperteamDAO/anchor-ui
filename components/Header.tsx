@@ -33,7 +33,7 @@ function NavItems() {
 
 function Header() {
   return (
-    <div className="flex items-center justify-between w-full px-6  lg:space-x-6 py-2">
+    <div className="flex items-center justify-between w-full px-4   py-2">
       <Link href={"/"}>
         <p className="text-2xl font-mono font-semibold text-blue-700">
           Anchor UI
