@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen  flex-col items-center px-4 lg:px-6">
+    <main className="flex min-h-screen w-full  flex-col items-center px-4 lg:px-6">
       <div className="py-3 w-full">
         <h1 className="scroll-m-20 text-xl font-bold tracking-tight pb-1 ">
           Enter your Program's IDL

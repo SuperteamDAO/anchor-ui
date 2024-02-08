@@ -33,13 +33,13 @@ function NavItems() {
 
 function Header() {
   return (
-    <div className="flex items-center justify-between w-full px-6 border-b lg:space-x-6 py-4">
+    <div className="flex items-center justify-between w-full px-6  lg:space-x-6 py-2">
       <Link href={"/"}>
-        <p className="text-lg font-mono font-semibold text-blue-700">
+        <p className="text-2xl font-mono font-semibold text-blue-700">
           Anchor UI
         </p>
       </Link>
-      <NavItems />
+      {/* <NavItems /> */}
       <div className="flex flex-row items-center space-x-4">
         {/* Add a Component similar to the Jupiter website to change ENVs and RPC
         Urls */}
