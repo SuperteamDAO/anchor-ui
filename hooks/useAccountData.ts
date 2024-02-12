@@ -6,12 +6,14 @@ const getAllAccountsData = async (
   program: anchor.Program,
   accountName: string
 ) => {
-  return await program.account[accountName].all();
+  const data = await program.account[accountName.toLowerCase()].all();
+  return data;
 };
 
 export function useAccountData(program: anchor.Program, accountName: string) {
   const query = useQuery({
-    queryKey: [accountName],
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey: ["accountData", accountName],
     queryFn: () => getAllAccountsData(program, accountName),
   });
   return query;

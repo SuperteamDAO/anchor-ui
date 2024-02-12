@@ -66,8 +66,8 @@ export function SettingsBtn() {
     }
 
     if (programId && idl) {
-      console.log("GOT IN HERE");
       const RPC = getRpcUrl(data.clusterSlug);
+      console.log("RPC", RPC);
       anchor.setProvider({
         connection: new anchor.web3.Connection(RPC),
       });

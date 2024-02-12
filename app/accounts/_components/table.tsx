@@ -1,20 +1,19 @@
 "use client";
+import { useAccountData } from "@/hooks/useAccountData";
 import { useAnchorStore } from "@/hooks/useAnchorStore";
+import * as anchor from "@coral-xyz/anchor";
 import React, { useEffect } from "react";
 
 type AccountTableProps = {
   accountName: string;
+  program: anchor.Program;
+  idl: anchor.Idl;
 };
 
-function AccountTable({ accountName }: AccountTableProps) {
-  const { program, idl } = useAnchorStore();
+// Add Error Boundary for this page itself or this component
+function AccountTable({ accountName, idl, program }: AccountTableProps) {
+  const { data, isLoading, isError } = useAccountData(program, accountName);
 
-  useEffect(() => {
-    (async () => {
-      const data = await program?.account[accountName.toLowerCase()].all();
-      console.log("ACCOUNT DATA", data);
-    })();
-  }, [program, idl, accountName]);
   return <div>This is going to be a table</div>;
 }
 
