@@ -4,7 +4,14 @@ import { Providers } from "@/providers/Providers";
 import Header from "./Header";
 import { Toaster } from "./ui/toaster";
 import { NavItems, SideBarNav } from "./SideBarNav";
-import { Braces, BookA, Activity } from "lucide-react";
+import {
+  Braces,
+  BookA,
+  Activity,
+  CircuitBoard,
+  Database,
+  ChevronRightSquare,
+} from "lucide-react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -15,20 +22,26 @@ const navItems: NavItems[] = [
   {
     href: "/",
     title: "IDL",
-    variant: "default",
+
     icon: Braces,
   },
   {
     href: "/accounts",
     title: "Accounts",
-    variant: "ghost",
-    icon: BookA,
+
+    icon: Database,
   },
   {
     href: "/instructions",
     title: "Instructions",
-    variant: "ghost",
-    icon: Activity,
+
+    icon: ChevronRightSquare,
+  },
+  {
+    href: "/transactions",
+    title: "Transactions",
+
+    icon: CircuitBoard,
   },
 ];
 

@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
 export enum Cluster {
-  MainnetBeta,
-  Testnet,
-  Devnet,
-  Custom,
+  MainnetBeta = "mainnet-beta",
+  Testnet = "testnet",
+  Devnet = "devnet",
+  Custom = "custom",
 }
 export const CLUSTERS = [
   Cluster.MainnetBeta,
@@ -66,6 +66,7 @@ export interface RpcStore {
   customRpc: string;
   setCustomCluster: (uri: string) => void;
   setCluster: (cluster: Cluster) => void;
+  getRpcUrl: (cluster: Cluster) => string;
 }
 
 const initialState: RpcStore = {
@@ -73,13 +74,27 @@ const initialState: RpcStore = {
   customRpc: "",
   setCustomCluster: (uri: string) => {},
   setCluster: (cluster: Cluster) => {},
+  getRpcUrl: (cluster: Cluster) => "",
 };
 
 export const useClusterStore = create<RpcStore>((set, get) => ({
   ...initialState,
   setCustomCluster: (uri: string) => {
-    set({ customRpc: uri });
-    set({ cluster: Cluster.Custom });
+    if (get().cluster === Cluster.Custom) {
+      set({ customRpc: uri });
+    }
   },
   setCluster: (cluster: Cluster) => set({ cluster }),
+  getRpcUrl: (cluster: Cluster): string => {
+    switch (cluster) {
+      case Cluster.MainnetBeta:
+        return MAINNET_BETA_URL;
+      case Cluster.Testnet:
+        return TESTNET_URL;
+      case Cluster.Devnet:
+        return DEVNET_URL;
+      case Cluster.Custom:
+        return get().customRpc;
+    }
+  },
 }));

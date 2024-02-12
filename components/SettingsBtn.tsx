@@ -17,6 +17,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   CLUSTERS,
+  Cluster,
+  DEFAULT_CLUSTER,
   clusterName,
   clusterSlug,
   slugToCluster,
@@ -29,6 +31,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,27 +39,39 @@ import {
 } from "@/components/ui/form";
 
 const FormSchema = z.object({
-  clusterSlug: z.enum(["mainnet-beta", "testnet", "devnet", "custom"], {
+  clusterSlug: z.nativeEnum(Cluster, {
     required_error: "Incorrect Cluster type",
   }),
+  customRpc: z.string().optional(),
 });
 
 export function SettingsBtn() {
-  const { cluster, setCluster } = useClusterStore();
+  const { setCluster, setCustomCluster, cluster } = useClusterStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      clusterSlug: cluster,
+      customRpc: "",
+    },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    setCluster(data.clusterSlug);
+    if (data.clusterSlug === Cluster.Custom) {
+      setCustomCluster(data.customRpc || "");
+    }
+    // toast({
+    //   title: "You submitted the following values:",
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // });
   }
+
+  const watchedClusterSlug = form.watch("clusterSlug");
+  console.log("watchedClusterSlug", watchedClusterSlug);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -64,21 +79,20 @@ export function SettingsBtn() {
           <Settings className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all " />
         </Button>
       </DialogTrigger>
-      <DialogContent className="">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle>Settings</DialogTitle>
+          <DialogTitle>Set RPC Endpoint</DialogTitle>
 
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-2/3 space-y-6"
+              className="w-2/3 space-y-4 pt-5"
             >
               <FormField
                 control={form.control}
                 name="clusterSlug"
                 render={({ field }) => (
                   <FormItem className="space-y-3">
-                    <FormLabel className="text-lg">RPC Endpoint</FormLabel>
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
@@ -89,10 +103,7 @@ export function SettingsBtn() {
                           const slug = clusterSlug(cluster);
                           const name = clusterName(cluster);
                           return (
-                            <FormItem
-                              key={cluster}
-                              className="flex items-center space-x-2"
-                            >
+                            <FormItem key={cluster} className=" space-x-2">
                               <FormControl>
                                 <RadioGroupItem value={slug} id={slug} />
                               </FormControl>
@@ -105,7 +116,37 @@ export function SettingsBtn() {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <div
+                className={`transition-opacity duration-500 ${
+                  watchedClusterSlug === Cluster.Custom
+                    ? "opacity-100"
+                    : "opacity-0 h-0 overflow-hidden"
+                }`}
+              >
+                <FormField
+                  control={form.control}
+                  name="customRpc"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>RPC Endpoint</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Custo RPC Endpoint"
+                          className="flex-1 p-4 my-2"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        This is the Custom RPC endpoint.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                Submit
+              </Button>
             </form>
           </Form>
         </DialogHeader>
