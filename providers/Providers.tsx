@@ -1,6 +1,13 @@
 "use client";
 import dynamic from "next/dynamic";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+import { useState } from "react";
 
 const UnifiedWalletProvider = dynamic(
   async () => (await import("@jup-ag/wallet-adapter")).UnifiedWalletProvider,
@@ -8,6 +15,17 @@ const UnifiedWalletProvider = dynamic(
 );
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 5 * 1000,
+          },
+        },
+      })
+  );
+
   return (
     <ThemeProvider
       attribute="class"
@@ -35,7 +53,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
           lang: "en",
         }}
       >
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+          {<ReactQueryDevtools initialIsOpen={false} />}
+        </QueryClientProvider>
       </UnifiedWalletProvider>
     </ThemeProvider>
   );

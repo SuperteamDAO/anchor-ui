@@ -37,6 +37,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useAnchorStore } from "@/hooks/useAnchorStore";
+import * as anchor from "@coral-xyz/anchor";
 
 const FormSchema = z.object({
   clusterSlug: z.nativeEnum(Cluster, {
@@ -46,7 +48,9 @@ const FormSchema = z.object({
 });
 
 export function SettingsBtn() {
-  const { setCluster, setCustomCluster, cluster } = useClusterStore();
+  const { setCluster, setCustomCluster, cluster, getRpcUrl } =
+    useClusterStore();
+  const { setProgram, programId, idl } = useAnchorStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -60,18 +64,24 @@ export function SettingsBtn() {
     if (data.clusterSlug === Cluster.Custom) {
       setCustomCluster(data.customRpc || "");
     }
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
+
+    if (programId && idl) {
+      console.log("GOT IN HERE");
+      const RPC = getRpcUrl(data.clusterSlug);
+      anchor.setProvider({
+        connection: new anchor.web3.Connection(RPC),
+      });
+      const provider = anchor.getProvider() as anchor.AnchorProvider;
+      setProgram(provider);
+    }
+
+    toast({
+      title: "Cluster Set SuccessFully",
+    });
   }
 
   const watchedClusterSlug = form.watch("clusterSlug");
-  console.log("watchedClusterSlug", watchedClusterSlug);
+  // console.log("watchedClusterSlug", watchedClusterSlug);
   return (
     <Dialog>
       <DialogTrigger asChild>
