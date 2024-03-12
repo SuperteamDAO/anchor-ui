@@ -12,7 +12,7 @@ export default function AccountPage() {
     <div className="flex min-h-screen  w-full  flex-col ">
       {idl.accounts !== undefined && program !== null ? (
         <div className="py-2 px-4">
-          <Tabs defaultValue={idl.accounts[0].name} className="w-[400px]">
+          <Tabs defaultValue={idl.accounts[0].name} className="w-full">
             <TabsList>
               {idl.accounts.map((account) => (
                 <TabsTrigger key={account.name} value={account.name}>
