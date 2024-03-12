@@ -30,6 +30,8 @@ const formSchema = z.object({
 export default function Home() {
   const { setIdl, setProgramId, setProgram, programId, idl } = useAnchorStore();
   const { cluster, getRpcUrl } = useClusterStore();
+
+  // add custom error messages
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,44 +57,47 @@ export default function Home() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
           <div className="flex flex-row justify-between items-center  py-2 w-full px-4">
-            <h1 className="scroll-m-20  text-xl font-bold tracking-tight pb-1 ">
+            <h1 className="scroll-m-20  text-md font-semibold tracking-tight  text-muted-foreground ">
               Enter your Program&apos;s IDL
             </h1>
-            <Button
-              variant={"default"}
-              type="submit"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Send className="mr-2 h-4 w-4" />
-              )}
-              Generate UI
-            </Button>
           </div>
           <Separator />
 
           <div className="container pt-2">
-            <FormField
-              control={form.control}
-              name="programId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Your program ID</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Program Name"
-                      className=" flex-1 p-4 my-2 "
-                      defaultValue={programId}
-                      {...field}
-                    />
-                  </FormControl>
+            <div className="flex w-4/6 gap-4  flex-row">
+              <FormField
+                control={form.control}
+                name="programId"
+                render={({ field }) => (
+                  <FormItem className="pb-4 grow">
+                    <FormLabel>Your program ID</FormLabel>
+                    <FormControl className="">
+                      <Input
+                        placeholder="Program Name"
+                        className="p-4 grow w-full"
+                        defaultValue={programId}
+                        {...field}
+                      />
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                variant={"default"}
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="mt-8"
+              >
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Send className="mr-2 h-4 w-4" />
+                )}
+                Generate UI
+              </Button>
+            </div>
             <FormField
               control={form.control}
               name="idl"
@@ -103,7 +108,7 @@ export default function Home() {
                   <FormControl>
                     <Textarea
                       placeholder="Your Program's IDL"
-                      className="min-h-[200px] flex-1 p-4 md:min-h-[500px] my-2 lg:min-h-[500px]"
+                      className="min-h-[200px] w-4/6 p-4 md:min-h-[500px]  lg:min-h-[500px]"
                       {...field}
                     />
                   </FormControl>
