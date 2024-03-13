@@ -70,7 +70,7 @@ export default function Home() {
                 name="programId"
                 render={({ field }) => (
                   <FormItem className="pb-4 grow">
-                    <FormLabel>Your program ID</FormLabel>
+                    <FormLabel>Your Program ID</FormLabel>
                     <FormControl className="">
                       <Input
                         placeholder="Program Name"
@@ -104,7 +104,7 @@ export default function Home() {
               defaultValue={idl.toString()}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your program IDL</FormLabel>
+                  <FormLabel>Your Program IDL</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Your Program's IDL"

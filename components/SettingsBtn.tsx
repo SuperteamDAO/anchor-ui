@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/form";
 import { useAnchorStore } from "@/hooks/useAnchorStore";
 import * as anchor from "@coral-xyz/anchor";
+import { cn } from "@/lib/utils";
 
 const FormSchema = z.object({
   clusterSlug: z.nativeEnum(Cluster, {
@@ -50,6 +51,7 @@ const FormSchema = z.object({
 export function SettingsBtn() {
   const { setCluster, setCustomCluster, cluster, getRpcUrl } =
     useClusterStore();
+  console.log("cluster", cluster);
   const { setProgram, programId, idl } = useAnchorStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -60,28 +62,40 @@ export function SettingsBtn() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    setCluster(data.clusterSlug);
-    if (data.clusterSlug === Cluster.Custom) {
-      setCustomCluster(data.customRpc || "");
-    }
+    try {
+      setCluster(data.clusterSlug);
 
-    if (programId && idl) {
-      const RPC = getRpcUrl(data.clusterSlug);
-      console.log("RPC", RPC);
-      anchor.setProvider({
-        connection: new anchor.web3.Connection(RPC),
+      if (data.clusterSlug === Cluster.Custom && data.customRpc === "") {
+        throw new Error("Custom RPC is required");
+      }
+
+      if (data.clusterSlug === Cluster.Custom) {
+        setCustomCluster(data.customRpc || "");
+      }
+
+      if (programId && idl) {
+        const RPC = getRpcUrl(data.clusterSlug);
+        console.log("RPC", RPC);
+        anchor.setProvider({
+          connection: new anchor.web3.Connection(RPC),
+        });
+        const provider = anchor.getProvider() as anchor.AnchorProvider;
+        setProgram(provider);
+      }
+
+      toast({
+        title: "Cluster Set SuccessFully",
       });
-      const provider = anchor.getProvider() as anchor.AnchorProvider;
-      setProgram(provider);
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: error.message,
+      });
     }
-
-    toast({
-      title: "Cluster Set SuccessFully",
-    });
   }
 
   const watchedClusterSlug = form.watch("clusterSlug");
-  // console.log("watchedClusterSlug", watchedClusterSlug);
+  console.log("watchedClusterSlug", watchedClusterSlug);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -91,33 +105,53 @@ export function SettingsBtn() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Set RPC Endpoint</DialogTitle>
-
+          <DialogTitle>RPC Endpoint</DialogTitle>
+          <DialogDescription>
+            Set the RPC endpoint for the cluster you want to connect to.
+          </DialogDescription>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-2/3 space-y-4 pt-5"
+              className="w-full flex-col items-center justify-center space-y-4 pt-5"
             >
               <FormField
                 control={form.control}
                 name="clusterSlug"
                 render={({ field }) => (
-                  <FormItem className="space-y-3">
+                  <FormItem className="space-y-3 w-full">
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-                        className="flex flex-col space-y-1"
                       >
-                        {CLUSTERS.map((cluster) => {
-                          const slug = clusterSlug(cluster);
-                          const name = clusterName(cluster);
+                        {CLUSTERS.map((formCluster) => {
+                          const slug = clusterSlug(formCluster);
+                          const name = clusterName(formCluster);
                           return (
-                            <FormItem key={cluster} className=" space-x-2">
+                            <FormItem key={formCluster}>
                               <FormControl>
-                                <RadioGroupItem value={slug} id={slug} />
+                                <RadioGroupItem
+                                  value={slug}
+                                  id={slug}
+                                  className="sr-only"
+                                />
                               </FormControl>
-                              <Label htmlFor={slug}>{name}</Label>
+                              <Label
+                                className={cn(
+                                  "block w-full border cursor-pointer rounded-md p-6 hover:border-primary hover:bg-primary/10 transition-colors",
+                                  {
+                                    "bg-gray-200": watchedClusterSlug === slug,
+                                  }
+                                )}
+                                htmlFor={slug}
+                              >
+                                {name}
+                                {cluster === slug && (
+                                  <p className="text-sm text-muted-foreground ">
+                                    Currently Selected
+                                  </p>
+                                )}
+                              </Label>
                             </FormItem>
                           );
                         })}
@@ -127,7 +161,7 @@ export function SettingsBtn() {
                 )}
               />
               <div
-                className={`transition-opacity duration-500 ${
+                className={`transition-transform ${
                   watchedClusterSlug === Cluster.Custom
                     ? "opacity-100"
                     : "opacity-0 h-0 overflow-hidden"
