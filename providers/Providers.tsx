@@ -8,6 +8,7 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { useState } from "react";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const UnifiedWalletProvider = dynamic(
   async () => (await import("@jup-ag/wallet-adapter")).UnifiedWalletProvider,
@@ -54,8 +55,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
         }}
       >
         <QueryClientProvider client={queryClient}>
-          {children}
-          {<ReactQueryDevtools initialIsOpen={false} />}
+          <TooltipProvider>
+            {children}
+            {<ReactQueryDevtools initialIsOpen={false} />}
+          </TooltipProvider>
         </QueryClientProvider>
       </UnifiedWalletProvider>
     </ThemeProvider>

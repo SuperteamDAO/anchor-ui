@@ -12,11 +12,31 @@ import {
   Database,
   ChevronRightSquare,
 } from "lucide-react";
+import { Button } from "./ui/button";
 import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Bird,
+  Book,
+  Bot,
+  Code2,
+  CornerDownLeft,
+  LifeBuoy,
+  Mic,
+  Paperclip,
+  Rabbit,
+  Settings,
+  Settings2,
+  Share,
+  SquareUser,
+  Triangle,
+  Turtle,
+} from "lucide-react";
+import V1SidebarNav from "./V1SidebarNav";
+import V1Header from "./V1Header";
 
 const navItems: NavItems[] = [
   {
@@ -47,23 +67,17 @@ const navItems: NavItems[] = [
 
 export function Client({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-screen overflow-x-hidden h-screen overflow-hidden">
-      <Providers>
-        <div className="flex flex-col w-full ">
-          <Header />
-          <ResizablePanelGroup
-            direction="horizontal"
-            className=" items-stretch border"
-          >
-            <ResizablePanel minSize={10} maxSize={15} defaultSize={15}>
-              <SideBarNav items={navItems} />
-            </ResizablePanel>
-            <ResizableHandle />
-            <ResizablePanel className="w-full">{children}</ResizablePanel>
-          </ResizablePanelGroup>
+    <Providers>
+      <div className="grid h-screen w-full pl-[56px]">
+        <V1SidebarNav items={navItems} />
+        <div className="flex flex-col">
+          <V1Header />
+          <main className="grid flex-1 gap-4 overflow-auto p-4 bg-muted/40 ">
+            {children}
+          </main>
         </div>
         <Toaster />
-      </Providers>
-    </div>
+      </div>
+    </Providers>
   );
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
-import { link } from "fs";
+
 import { usePathname } from "next/navigation";
 
 export type NavItems = {
