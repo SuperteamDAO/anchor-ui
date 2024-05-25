@@ -1,53 +1,21 @@
-"use client";
-
 import Link from "next/link";
 import React from "react";
-import { WalletConnect } from "./WalletConnect";
 import { ModeToggle } from "./ColorModeToggle";
 import { SettingsBtn } from "./SettingsBtn";
-
-function NavItems() {
-  return (
-    <nav className="flex items-center  space-x-4 lg:space-x-6">
-      <Link
-        href={"/"}
-        className="text-sm font-medium transition-colors hover:text-primary"
-      >
-        IDL
-      </Link>
-      <Link
-        href={"/"}
-        className="text-sm font-medium transition-colors hover:text-primary"
-      >
-        Accounts
-      </Link>
-      <Link
-        href={"/"}
-        className="text-sm font-medium transition-colors hover:text-primary"
-      >
-        Instructions
-      </Link>
-    </nav>
-  );
-}
+import { WalletConnect } from "./WalletConnect";
 
 function Header() {
   return (
-    <div className="flex items-center justify-between w-full px-4   py-2">
+    <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
       <Link href={"/"}>
-        <p className="text-2xl font-mono font-semibold text-blue-700">
-          Anchor UI
-        </p>
+        <p className="text-2xl font-mono font-semibold text-white">Anchor UI</p>
       </Link>
-      {/* <NavItems /> */}
-      <div className="flex flex-row items-center space-x-4">
-        {/* Add a Component similar to the Jupiter website to change ENVs and RPC
-        Urls */}
+      <div className="ml-auto gap-1.5 flex flex-row items-center justify-around">
         <ModeToggle />
         <SettingsBtn />
         <WalletConnect />
       </div>
-    </div>
+    </header>
   );
 }
 

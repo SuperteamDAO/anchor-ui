@@ -53,51 +53,47 @@ export default function Home() {
     setProgram(provider);
   }
   return (
-    <main className="flex min-h-screen w-full  flex-col items-center">
+    <main className="flex h-full min-h-[89vh] w-full  flex-col  items-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-          <div className="flex flex-row justify-between items-center  py-2 w-full px-4">
-            <h1 className="scroll-m-20  text-md font-semibold tracking-tight  text-muted-foreground ">
-              Enter your Program&apos;s IDL
-            </h1>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full flex flex-col h-full items-center"
+        >
+          <div className="flex w-4/6 gap-4   flex-row">
+            <FormField
+              control={form.control}
+              name="programId"
+              render={({ field }) => (
+                <FormItem className="pb-4 grow">
+                  <FormLabel>Your Program ID</FormLabel>
+                  <FormControl className="">
+                    <Input
+                      placeholder="Program Name"
+                      className="p-4 grow w-full"
+                      defaultValue={programId}
+                      {...field}
+                    />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              variant={"default"}
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="mt-8"
+            >
+              {form.formState.isSubmitting ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="mr-2 h-4 w-4" />
+              )}
+              Generate UI
+            </Button>
           </div>
-          <Separator />
-
-          <div className="container pt-2">
-            <div className="flex w-4/6 gap-4  flex-row">
-              <FormField
-                control={form.control}
-                name="programId"
-                render={({ field }) => (
-                  <FormItem className="pb-4 grow">
-                    <FormLabel>Your Program ID</FormLabel>
-                    <FormControl className="">
-                      <Input
-                        placeholder="Program Name"
-                        className="p-4 grow w-full"
-                        defaultValue={programId}
-                        {...field}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                variant={"default"}
-                type="submit"
-                disabled={form.formState.isSubmitting}
-                className="mt-8"
-              >
-                {form.formState.isSubmitting ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="mr-2 h-4 w-4" />
-                )}
-                Generate UI
-              </Button>
-            </div>
+          <div className="w-4/6">
             <FormField
               control={form.control}
               name="idl"
@@ -108,7 +104,7 @@ export default function Home() {
                   <FormControl>
                     <Textarea
                       placeholder="Your Program's IDL"
-                      className="min-h-[200px] w-4/6 p-4 md:min-h-[500px]  lg:min-h-[500px]"
+                      className="min-h-[200px] w-full p-4 md:min-h-[500px]  lg:min-h-[500px]"
                       {...field}
                     />
                   </FormControl>

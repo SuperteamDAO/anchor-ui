@@ -1,7 +1,6 @@
 "use client";
 
 import { Providers } from "@/providers/Providers";
-import Header from "./Header";
 import { Toaster } from "./ui/toaster";
 import { NavItems, SideBarNav } from "./SideBarNav";
 import {
@@ -12,31 +11,9 @@ import {
   Database,
   ChevronRightSquare,
 } from "lucide-react";
-import { Button } from "./ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-  Bird,
-  Book,
-  Bot,
-  Code2,
-  CornerDownLeft,
-  LifeBuoy,
-  Mic,
-  Paperclip,
-  Rabbit,
-  Settings,
-  Settings2,
-  Share,
-  SquareUser,
-  Triangle,
-  Turtle,
-} from "lucide-react";
+
 import V1SidebarNav from "./V1SidebarNav";
-import V1Header from "./V1Header";
+import Header from "./Header";
 
 const navItems: NavItems[] = [
   {
@@ -71,8 +48,8 @@ export function Client({ children }: { children: React.ReactNode }) {
       <div className="grid h-screen w-full pl-[56px]">
         <V1SidebarNav items={navItems} />
         <div className="flex flex-col">
-          <V1Header />
-          <main className="grid flex-1 gap-4 overflow-auto p-4 bg-muted/40 ">
+          <Header />
+          <main className="grid flex-1 gap-4 overflow-auto overscroll-none p-4 bg-muted/40 ">
             {children}
           </main>
         </div>
