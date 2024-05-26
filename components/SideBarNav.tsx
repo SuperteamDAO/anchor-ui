@@ -1,48 +1,178 @@
-"use client";
+import React from "react";
+import { Button, buttonVariants } from "./ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Link from "next/link";
-import { LucideIcon } from "lucide-react";
+import {
+  Bird,
+  Book,
+  Bot,
+  Code2,
+  CornerDownLeft,
+  LifeBuoy,
+  LucideIcon,
+  Mic,
+  Paperclip,
+  Rabbit,
+  Settings,
+  Settings2,
+  Share,
+  SquareUser,
+  Triangle,
+  Turtle,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
-
-import { usePathname } from "next/navigation";
 
 export type NavItems = {
   title: string;
   href: string;
   icon: LucideIcon;
+  variant: "default" | "ghost";
 };
 
 type SideBarNavProps = {
   items: NavItems[];
 };
 
-export function SideBarNav({ items }: SideBarNavProps) {
-  const pathname = usePathname();
+function SidebarNav({ items }: SideBarNavProps) {
   return (
-    <div className="flex flex-col gap-4 py-2 ">
-      <nav className="grid gap-2 px-2 justify-items-center ">
+    <aside className="inset-y w-[200px]  fixed  left-0 z-20 flex h-full flex-col border-r">
+      <div className="border-b p-2">
+        <Button variant="outline" size="icon" aria-label="Home">
+          {/* //logo */}
+          <Triangle className="size-5 fill-foreground" />
+        </Button>
+      </div>
+      <nav className="grid gap-1 p-2">
         {items.map((item, idx) => {
-          const variant = pathname === item.href ? "default" : "ghost";
           return (
-            <Link
-              key={idx}
-              href={item.href}
-              className={cn(
-                buttonVariants({
-                  variant: variant,
-                  size: "sm",
-                }),
-                variant === "default" &&
-                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                "w-full justify-start "
-              )}
-            >
-              <item.icon className="mr-2 h-4 w-4" />
-              {item.title}
-            </Link>
+            <Tooltip key={item.title}>
+              <TooltipTrigger asChild>
+                <Link href={item.href}>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    className="rounded-lg "
+                    aria-label="Playground"
+                  >
+                    <div className="flex gap-2 flex-row items-center">
+                      <item.icon className="size-5" />
+                      <p className="leading-7 ">{item.title}</p>
+                    </div>
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right" sideOffset={5}>
+                {item.title}
+              </TooltipContent>
+            </Tooltip>
           );
         })}
+      </nav>
+      <nav className="mt-auto grid gap-1 p-2">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="mt-auto rounded-lg"
+              aria-label="Help"
+            >
+              <LifeBuoy className="size-5" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right" sideOffset={5}>
+            Help
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="mt-auto rounded-lg"
+              aria-label="Account"
+            >
+              <SquareUser className="size-5" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right" sideOffset={5}>
+            Account
+          </TooltipContent>
+        </Tooltip>
+      </nav>
+    </aside>
+  );
+}
+
+// export default SidebarNav;
+
+export function SideBarNewNav({ links }: { links: NavItems[] }) {
+  return (
+    <div
+      data-collapsed={false}
+      className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
+    >
+      <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+        {links.map((link, index) =>
+          false ? (
+            <Tooltip key={index} delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Link
+                  href="#"
+                  className={cn(
+                    buttonVariants({ variant: link.variant, size: "icon" }),
+                    "h-9 w-9",
+                    link.variant === "default" &&
+                      "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                  )}
+                >
+                  <link.icon className="h-4 w-4" />
+                  <span className="sr-only">{link.title}</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="flex items-center gap-4">
+                {link.title}
+                {link.title && (
+                  <span className="ml-auto text-muted-foreground">
+                    {link.title}
+                  </span>
+                )}
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Link
+              key={index}
+              href="#"
+              className={cn(
+                buttonVariants({ variant: link.variant, size: "sm" }),
+                link.variant === "default" &&
+                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+                "justify-start"
+              )}
+            >
+              <link.icon className="mr-2 h-4 w-4" />
+              {link.title}
+              {link.title && (
+                <span
+                  className={cn(
+                    "ml-auto",
+                    link.variant === "default" &&
+                      "text-background dark:text-white"
+                  )}
+                >
+                  {link.title}
+                </span>
+              )}
+            </Link>
+          )
+        )}
       </nav>
     </div>
   );
 }
+
+export default SidebarNav;

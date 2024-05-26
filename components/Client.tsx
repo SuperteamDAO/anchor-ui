@@ -2,7 +2,7 @@
 
 import { Providers } from "@/providers/Providers";
 import { Toaster } from "./ui/toaster";
-import { NavItems, SideBarNav } from "./SideBarNav";
+
 import {
   Braces,
   BookA,
@@ -12,32 +12,32 @@ import {
   ChevronRightSquare,
 } from "lucide-react";
 
-import V1SidebarNav from "./V1SidebarNav";
+import SideBarNav, { NavItems } from "./SideBarNav";
 import Header from "./Header";
 
 const navItems: NavItems[] = [
   {
     href: "/",
     title: "IDL",
-
+    variant: "default",
     icon: Braces,
   },
   {
     href: "/accounts",
     title: "Accounts",
-
+    variant: "ghost",
     icon: Database,
   },
   {
     href: "/instructions",
     title: "Instructions",
-
+    variant: "ghost",
     icon: ChevronRightSquare,
   },
   {
     href: "/transactions",
+    variant: "ghost",
     title: "Transactions",
-
     icon: CircuitBoard,
   },
 ];
@@ -45,8 +45,8 @@ const navItems: NavItems[] = [
 export function Client({ children }: { children: React.ReactNode }) {
   return (
     <Providers>
-      <div className="grid h-screen w-full pl-[56px]">
-        <V1SidebarNav items={navItems} />
+      <div className="grid h-screen w-full pl-[200px]">
+        <SideBarNav items={navItems} />
         <div className="flex flex-col">
           <Header />
           <main className="grid flex-1 gap-4 overflow-auto overscroll-none p-4 bg-muted/40 ">
