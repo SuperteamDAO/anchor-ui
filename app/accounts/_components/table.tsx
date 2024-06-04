@@ -1,6 +1,6 @@
 "use client";
 import { useAccountData } from "@/hooks/useAccountData";
-import { useAnchorStore } from "@/hooks/useAnchorStore";
+import { useAnchorStore } from "@/hooks/useCurrentProgram";
 import * as anchor from "@coral-xyz/anchor";
 import React from "react";
 import {

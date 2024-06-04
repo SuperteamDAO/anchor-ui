@@ -1,5 +1,5 @@
 "use client";
-import { useAnchorStore } from "@/hooks/useAnchorStore";
+import { useAnchorStore } from "@/hooks/useCurrentProgram";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // import AccountTable from "./_components/table";

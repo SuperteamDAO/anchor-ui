@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -37,7 +36,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useAnchorStore } from "@/hooks/useAnchorStore";
+import { useCurrentProgramStore } from "@/hooks/useCurrentProgram";
 import * as anchor from "@coral-xyz/anchor";
 import { cn } from "@/lib/utils";
 
@@ -52,7 +51,7 @@ export function SettingsBtn() {
   const { setCluster, setCustomCluster, cluster, getRpcUrl } =
     useClusterStore();
   console.log("cluster", cluster);
-  const { setProgram, programId, idl } = useAnchorStore();
+  const { setProgram, program } = useCurrentProgramStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -64,7 +63,6 @@ export function SettingsBtn() {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setCluster(data.clusterSlug);
-
       if (data.clusterSlug === Cluster.Custom && data.customRpc === "") {
         throw new Error("Custom RPC is required");
       }
@@ -73,14 +71,14 @@ export function SettingsBtn() {
         setCustomCluster(data.customRpc || "");
       }
 
-      if (programId && idl) {
+      if (program) {
         const RPC = getRpcUrl(data.clusterSlug);
         console.log("RPC", RPC);
         anchor.setProvider({
           connection: new anchor.web3.Connection(RPC),
         });
         const provider = anchor.getProvider() as anchor.AnchorProvider;
-        setProgram(provider);
+        setProgram(program.idl, provider);
       }
 
       toast({

@@ -46,23 +46,22 @@ function SidebarNav({ items }: SideBarNavProps) {
           <Triangle className="size-5 fill-foreground" />
         </Button>
       </div>
-      <nav className="grid gap-1 p-2">
+      <nav className="grid gap-1.5 py-1 px-2 w-full mt-4">
         {items.map((item, idx) => {
           return (
             <Tooltip key={item.title}>
               <TooltipTrigger asChild>
-                <Link href={item.href}>
-                  <Button
-                    variant="ghost"
-                    size="default"
-                    className="rounded-lg "
-                    aria-label="Playground"
-                  >
-                    <div className="flex gap-2 flex-row items-center">
-                      <item.icon className="size-5" />
-                      <p className="leading-7 ">{item.title}</p>
-                    </div>
-                  </Button>
+                <Link
+                  href={item.href}
+                  className={cn(
+                    buttonVariants({ variant: item.variant, size: "sm" }),
+                    item.variant === "default" &&
+                      "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+                    "justify-start w-full"
+                  )}
+                >
+                  <item.icon className="mr-2 h-4 w-4" />
+                  <p className="leading-7 ">{item.title}</p>
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={5}>
