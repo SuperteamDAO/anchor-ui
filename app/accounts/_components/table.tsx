@@ -1,6 +1,5 @@
 "use client";
 import { useAccountData } from "@/hooks/useAccountData";
-import { useAnchorStore } from "@/hooks/useCurrentProgram";
 import * as anchor from "@coral-xyz/anchor";
 import React from "react";
 import {
@@ -101,40 +100,44 @@ function DataTable<TData, TValue>({
 }
 
 // Add Error Boundary for this page itself or this component
-// function AccountTable({ accountName, idl, program }: AccountTableProps) {
-//   const { data, isLoading, isError } = useAccountData(program, accountName);
-//   console.log("idl", idl);
-//   console.log("data", data);
-//   const accountKeys = idl.accounts
-//     ?.find((account) => account.name === accountName)
-//     ?.type.fields.map((field) => field.name);
+function AccountTable({ accountName, idl, program }: AccountTableProps) {
+  const typedAccountName = accountName as keyof typeof idl.accounts;
+  const { data, isLoading, isError } = useAccountData(
+    program,
+    typedAccountName
+  );
+  console.log("idl", idl);
+  console.log("data", data);
+  // const accountKeys = idl.accounts
+  //   ?.find((account) => account.name === accountName)
+  //   ?.type.fields.map((field) => field.name);
 
-//   let rowStructure: Record<string, string> = { publicKey: "" };
-//   if (accountKeys) {
-//     rowStructure = accountKeys.reduce((acc, key) => {
-//       return { ...acc, [key]: "" };
-//     }, rowStructure);
-//   }
+  let rowStructure: Record<string, string> = { publicKey: "" };
+  // if (accountKeys) {
+  //   rowStructure = accountKeys.reduce((acc, key) => {
+  //     return { ...acc, [key]: "" };
+  //   }, rowStructure);
+  // }
 
-//   const accountDataColumn = accountColumns(rowStructure);
+  const accountDataColumn = accountColumns(rowStructure);
 
-//   const modifiedData = data?.map((item) => {
-//     const { account, publicKey } = item;
-//     return {
-//       publicKey: publicKey.toString(),
-//       ...account,
-//     };
-//   });
+  // const modifiedData = data?.map((item) => {
+  //   const { account, publicKey } = item;
+  //   return {
+  //     publicKey: publicKey.toString(),
+  //     ...account,
+  //   };
+  // });
 
-//   console.log("modifiedData", modifiedData);
+  // console.log("modifiedData", modifiedData);
 
-//   return (
-//     <div className="w-full">
-//       {modifiedData && (
-//         <DataTable columns={accountDataColumn} data={modifiedData} />
-//       )}
-//     </div>
-//   );
-// }
+  return (
+    <div className="w-full">
+      {/* {modifiedData && (
+        <DataTable columns={accountDataColumn} data={modifiedData} />
+      )} */}
+    </div>
+  );
+}
 
-// export default AccountTable;
+export default AccountTable;
