@@ -12,18 +12,34 @@ import {
 import { useCurrentProgramStore } from "@/hooks/useCurrentProgram";
 import { useProgramsListStore } from "@/hooks/useProgramsList";
 import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 function ProgramSwitcher() {
   const programs = useProgramsListStore((state) => state.programs);
-  const program = useCurrentProgramStore((state) => state.program);
-
-  console.log("program sidebar", program);
+  const currentProgram = useCurrentProgramStore((state) => state.program);
+  const router = useRouter();
+  const programsExcludingCurrent = programs.filter(
+    (p) => p.programId !== currentProgram?.programId
+  );
 
   const onValueChangeHandler = () => {};
 
+  if (!currentProgram || programs.length === 0) {
+    return (
+      <Button
+        className="w-full"
+        variant={"outline"}
+        onClick={() => router.push("/add-program")}
+      >
+        Add Program
+      </Button>
+    );
+  }
+
   return (
     <Select
-      defaultValue={program?.programId.toString()}
+      defaultValue={currentProgram?.programId.toString()}
       onValueChange={onValueChangeHandler}
     >
       <SelectTrigger
@@ -35,18 +51,29 @@ function ProgramSwitcher() {
         <SelectValue placeholder="Select Program">
           <span className="font-semibold">
             {" "}
-            {program?.rawIdl.metadata.name ?? "No Program name "}
+            {currentProgram?.rawIdl.metadata.name ?? "No Program name "}
           </span>
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
+          <SelectLabel>Programs</SelectLabel>
+          {programsExcludingCurrent.length !== 0 ? (
+            programsExcludingCurrent.map((p) => {
+              return (
+                <SelectItem
+                  key={p.programId.toString()}
+                  value={p.programId.toString()}
+                >
+                  {p.rawIdl.metadata.name}
+                </SelectItem>
+              );
+            })
+          ) : (
+            <SelectItem value="no-programs" disabled>
+              No Programs Found
+            </SelectItem>
+          )}
         </SelectGroup>
       </SelectContent>
     </Select>

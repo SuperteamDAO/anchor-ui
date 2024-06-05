@@ -52,16 +52,21 @@ export default function Home() {
       )}
       {programs.length > 0 && (
         <div className="flex flex-col w-full flex-1 container gap-4">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              Your Programs!
-            </h2>
-            <p className="text-muted-foreground">
-              Here&apos;s a list of all your programs u can interact with!
-            </p>
+          <div className="flex flex-row justify-between items-center w-full">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">
+                Your Programs!
+              </h2>
+              <p className="text-muted-foreground">
+                Here&apos;s a list of all your programs u can interact with!
+              </p>
+            </div>
+            <Link href="/add-program">
+              <Button className="mt-4">Add Program</Button>
+            </Link>
           </div>
-          <div className="">
-            <Table className="w-4/6 bg-black rounded-md p-4 ">
+          <div>
+            <Table className=" bg-black rounded-md p-4 ">
               <TableHeader>
                 <TableRow>
                   <TableHead>Program ID</TableHead>

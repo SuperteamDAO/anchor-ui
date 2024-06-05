@@ -27,16 +27,6 @@ export default function Page() {
   const { toast } = useToast();
   const router = useRouter();
 
-  useEffect(() => {
-    const initializeInput = async () => {
-      if (program && program.idl) {
-        const formattedIdl = await formatJsonata(JSON.stringify(program.idl));
-        setInput(formattedIdl);
-      }
-    };
-    initializeInput();
-  }, [program]);
-
   const handleChange = async (value: string) => {
     if (value !== "" && value.startsWith("{") && value.endsWith("}")) {
       const formattedCode = await formatJsonata(value);
