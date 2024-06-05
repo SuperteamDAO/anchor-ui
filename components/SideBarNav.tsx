@@ -25,6 +25,7 @@ import {
   Turtle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ProgramSwitcher from "./ProgramSwitcher";
 
 export type NavItems = {
   title: string;
@@ -41,10 +42,7 @@ function SidebarNav({ items }: SideBarNavProps) {
   return (
     <aside className="inset-y w-[200px]  fixed  left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
-        <Button variant="outline" size="icon" aria-label="Home">
-          {/* //logo */}
-          <Triangle className="size-5 fill-foreground" />
-        </Button>
+        <ProgramSwitcher />
       </div>
       <nav className="grid gap-1.5 py-1 px-2 w-full mt-4">
         {items.map((item, idx) => {
