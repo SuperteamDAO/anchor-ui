@@ -18,8 +18,8 @@ import Header from "./Header";
 const navItems: NavItems[] = [
   {
     href: "/",
-    title: "IDL",
-    variant: "default",
+    title: "Programs",
+    variant: "ghost",
     icon: Braces,
   },
   {

@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ProgramSwitcher from "./ProgramSwitcher";
+import { usePathname } from "next/navigation";
 
 export type NavItems = {
   title: string;
@@ -39,6 +40,7 @@ type SideBarNavProps = {
 };
 
 function SidebarNav({ items }: SideBarNavProps) {
+  const pathname = usePathname();
   return (
     <aside className="inset-y w-[200px]  fixed  left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
@@ -53,7 +55,7 @@ function SidebarNav({ items }: SideBarNavProps) {
                   href={item.href}
                   className={cn(
                     buttonVariants({ variant: item.variant, size: "sm" }),
-                    item.variant === "default" &&
+                    pathname === item.href &&
                       "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
                     "justify-start w-full"
                   )}
@@ -86,6 +88,7 @@ function SidebarNav({ items }: SideBarNavProps) {
 // export default SidebarNav;
 
 export function SideBarNewNav({ links }: { links: NavItems[] }) {
+  const pathname = usePathname();
   return (
     <div
       data-collapsed={false}

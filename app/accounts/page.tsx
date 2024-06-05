@@ -1,5 +1,5 @@
 "use client";
-import { useAnchorStore } from "@/hooks/useCurrentProgram";
+import { useCurrentProgramStore } from "@/hooks/useCurrentProgram";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // import AccountTable from "./_components/table";
@@ -8,11 +8,12 @@ import Link from "next/link";
 import NoProgramFound from "@/components/NoProgramFound";
 
 export default function AccountPage() {
-  const { program, idl } = useAnchorStore();
+  const program = useCurrentProgramStore((state) => state.program);
+  const idl = program?.rawIdl;
 
   return (
     <div className="flex  w-full  flex-col ">
-      {idl.accounts !== undefined && program !== null ? (
+      {idl?.accounts !== undefined && program !== null ? (
         <div className="py-2 px-4">
           <Tabs defaultValue={idl.accounts[0].name} className="w-full">
             <TabsList>
