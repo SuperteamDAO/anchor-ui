@@ -13,7 +13,7 @@ function NoProgramFound() {
           You can start adding programs by clicking the `&quot;Add
           Program`&quot; button below.
         </p>
-        <Link href="/">
+        <Link href="/add-program">
           <Button className="mt-4">Add Program</Button>
         </Link>
       </div>

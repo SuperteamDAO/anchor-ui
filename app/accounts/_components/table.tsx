@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { IdlDefinedFieldsNamed } from "@coral-xyz/anchor/dist/cjs/idl";
 
 type AccountTableProps = {
   accountName: string;
@@ -102,17 +103,28 @@ function DataTable<TData, TValue>({
 // Add Error Boundary for this page itself or this component
 function AccountTable({ accountName, idl, program }: AccountTableProps) {
   const typedAccountName = accountName as keyof typeof idl.accounts;
+  console.log("Account Name", accountName);
+  console.log("typedAccountName", typedAccountName);
   const { data, isLoading, isError } = useAccountData(
     program,
     typedAccountName
   );
-  console.log("idl", idl);
   console.log("data", data);
   // const accountKeys = idl.accounts
   //   ?.find((account) => account.name === accountName)
   //   ?.type.fields.map((field) => field.name);
 
+  const accountType = idl.types?.find((type) => type.name === accountName);
+  console.log("accountType", accountType);
+
   let rowStructure: Record<string, string> = { publicKey: "" };
+
+  if (accountType?.type.kind === "struct") {
+    const accountFields = accountType.type.fields as IdlDefinedFieldsNamed;
+    accountFields?.forEach((field) => {
+      rowStructure[field.name] = "";
+    });
+  }
   // if (accountKeys) {
   //   rowStructure = accountKeys.reduce((acc, key) => {
   //     return { ...acc, [key]: "" };
@@ -120,22 +132,23 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
   // }
 
   const accountDataColumn = accountColumns(rowStructure);
+  console.log("accountDataColumn", accountDataColumn);
 
-  // const modifiedData = data?.map((item) => {
-  //   const { account, publicKey } = item;
-  //   return {
-  //     publicKey: publicKey.toString(),
-  //     ...account,
-  //   };
-  // });
+  const modifiedData = data?.map((item) => {
+    const { account, publicKey } = item;
+    return {
+      publicKey: publicKey.toString(),
+      ...(account as any),
+    };
+  });
 
   // console.log("modifiedData", modifiedData);
 
   return (
     <div className="w-full">
-      {/* {modifiedData && (
+      {modifiedData && (
         <DataTable columns={accountDataColumn} data={modifiedData} />
-      )} */}
+      )}
     </div>
   );
 }
