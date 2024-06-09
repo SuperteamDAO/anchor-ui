@@ -78,9 +78,9 @@ export function SettingsBtn() {
           connection: new anchor.web3.Connection(RPC),
         });
         const provider = anchor.getProvider() as anchor.AnchorProvider;
-        setProgram(program.idl, provider);
+        const newProgram = new anchor.Program(program.idl, provider);
+        setProgram(newProgram);
       }
-
       toast({
         title: "Cluster Set SuccessFully",
       });
@@ -138,7 +138,7 @@ export function SettingsBtn() {
                                 className={cn(
                                   "block w-full border cursor-pointer rounded-md p-6 hover:border-primary hover:bg-primary/10 transition-colors",
                                   {
-                                    "bg-gray-200": watchedClusterSlug === slug,
+                                    "bg-gray-800": watchedClusterSlug === slug,
                                   }
                                 )}
                                 htmlFor={slug}

@@ -12,7 +12,7 @@ export default function AccountPage() {
   const idl = program?.rawIdl;
 
   return (
-    <div className="flex  w-full  flex-col ">
+    <div className="flex  w-full h-full  flex-col ">
       {idl?.accounts !== undefined && program !== null ? (
         <div className="py-2 px-4">
           <Tabs defaultValue={idl.accounts[0].name} className="w-full">

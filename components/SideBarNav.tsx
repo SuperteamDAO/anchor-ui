@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Bird,
   Book,
@@ -27,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import ProgramSwitcher from "./ProgramSwitcher";
 import { usePathname } from "next/navigation";
+import { clusterName, useClusterStore } from "@/hooks/useClusterStore";
 
 export type NavItems = {
   title: string;
@@ -41,6 +43,8 @@ type SideBarNavProps = {
 
 function SidebarNav({ items }: SideBarNavProps) {
   const pathname = usePathname();
+  const { cluster } = useClusterStore();
+  const clusterDisplayName = clusterName(cluster);
   return (
     <aside className="inset-y w-[200px]  fixed  left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
@@ -71,10 +75,21 @@ function SidebarNav({ items }: SideBarNavProps) {
           );
         })}
       </nav>
-      <nav className="mt-auto grid gap-1 p-2">
+      <nav className="mt-auto grid gap-4 p-2">
+        <div className="py-3 px-5 border border-gray-700 rounded-lg flex flex-row items-center bg-black shadow-md hover:bg-gray-800 transition duration-300 ease-in-out">
+          <span className="font-semibold text-base mr-2">Cluster -</span>
+          <span className="text-base ">{clusterDisplayName}</span>
+        </div>
         <Tooltip>
           <TooltipTrigger asChild>
-            <img src="/badge.svg" alt="SuperTeam Badge" />
+            <Link href="https://superteam.fun" target="_blank">
+              <Image
+                src="/badge.svg"
+                alt="SuperTeam Badge"
+                width={400}
+                height={40}
+              />
+            </Link>
           </TooltipTrigger>
           <TooltipContent side="right" sideOffset={5}>
             Superteam

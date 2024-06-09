@@ -4,12 +4,13 @@ export enum Cluster {
   MainnetBeta = "mainnet-beta",
   Testnet = "testnet",
   Devnet = "devnet",
+  Localnet = "localnet",
   Custom = "custom",
 }
 export const CLUSTERS = [
   Cluster.MainnetBeta,
-  Cluster.Testnet,
   Cluster.Devnet,
+  Cluster.Localnet,
   Cluster.Custom,
 ];
 
@@ -21,6 +22,8 @@ export function clusterSlug(cluster: Cluster): string {
       return "testnet";
     case Cluster.Devnet:
       return "devnet";
+    case Cluster.Localnet:
+      return "localnet";
     case Cluster.Custom:
       return "custom";
   }
@@ -37,6 +40,8 @@ export function slugToCluster(slug: string): Cluster {
       return Cluster.Devnet;
     case "custom":
       return Cluster.Custom;
+    case "localnet":
+      return Cluster.Localnet;
     default:
       return Cluster.Devnet;
   }
@@ -50,6 +55,8 @@ export function clusterName(cluster: Cluster): string {
       return "Testnet";
     case Cluster.Devnet:
       return "Devnet";
+    case Cluster.Localnet:
+      return "Localnet";
     case Cluster.Custom:
       return "Custom";
   }
@@ -58,6 +65,7 @@ export function clusterName(cluster: Cluster): string {
 export const MAINNET_BETA_URL = "https://api.mainnet-beta.solana.com";
 export const TESTNET_URL = "https://api.testnet.solana.com";
 export const DEVNET_URL = "https://api.devnet.solana.com";
+export const LOCALHOST_URL = "http://localhost:8899";
 
 export const DEFAULT_CLUSTER = Cluster.Devnet;
 
@@ -93,6 +101,8 @@ export const useClusterStore = create<RpcStore>((set, get) => ({
         return TESTNET_URL;
       case Cluster.Devnet:
         return DEVNET_URL;
+      case Cluster.Localnet:
+        return LOCALHOST_URL;
       case Cluster.Custom:
         return get().customRpc;
     }
