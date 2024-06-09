@@ -6,6 +6,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -17,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { IdlDefinedFieldsNamed } from "@coral-xyz/anchor/dist/cjs/idl";
+import { DataTableViewOptions } from "./toggleTable";
 
 type AccountTableProps = {
   accountName: string;
@@ -56,52 +58,62 @@ function DataTable<TData, TValue>({
     data,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
-    <div className="rounded-md border min-w-full">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+    <div className="flex flex-col gap-2">
+      <DataTableViewOptions table={table} />
+      <div className="rounded-md border min-w-full">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
@@ -120,7 +132,7 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
   const accountType = idl.types?.find((type) => type.name === accountName);
   console.log("accountType", accountType);
 
-  let rowStructure: Record<string, string> = { publicKey: "pubkey" };
+  let rowStructure: Record<string, string> = { account: "pubkey" };
 
   if (accountType?.type.kind === "struct") {
     const accountFields = accountType.type.fields as IdlDefinedFieldsNamed;
@@ -130,12 +142,11 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
   }
 
   const accountDataColumn = accountColumns(rowStructure);
-  console.log("accountDataColumn", accountDataColumn);
 
   const modifiedData = data?.map((item) => {
     const { account, publicKey } = item;
     return {
-      publicKey: publicKey.toString(),
+      account: publicKey.toString(),
       ...(account as any),
     };
   });
