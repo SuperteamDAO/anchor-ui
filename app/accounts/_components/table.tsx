@@ -27,9 +27,15 @@ type AccountTableProps = {
 // I need to fix the types here as i think this takes in the structure of the item
 function accountColumns(rowStructure: Record<string, string>) {
   const accountKeys = Object.keys(rowStructure);
-  const accountDataColumn = accountKeys.map((key) => {
+  const accountValues = Object.values(rowStructure);
+  const accountDataColumn = accountKeys.map((key, idx) => {
     return {
-      header: key.toUpperCase(),
+      header:
+        key.charAt(0).toUpperCase() +
+        key.slice(1) +
+        " (" +
+        accountValues[idx] +
+        ")",
       accessorKey: key,
     };
   });
@@ -110,26 +116,18 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
     typedAccountName
   );
   console.log("data", data);
-  // const accountKeys = idl.accounts
-  //   ?.find((account) => account.name === accountName)
-  //   ?.type.fields.map((field) => field.name);
 
   const accountType = idl.types?.find((type) => type.name === accountName);
   console.log("accountType", accountType);
 
-  let rowStructure: Record<string, string> = { publicKey: "" };
+  let rowStructure: Record<string, string> = { publicKey: "pubkey" };
 
   if (accountType?.type.kind === "struct") {
     const accountFields = accountType.type.fields as IdlDefinedFieldsNamed;
     accountFields?.forEach((field) => {
-      rowStructure[field.name] = "";
+      rowStructure[field.name] = field.type as string;
     });
   }
-  // if (accountKeys) {
-  //   rowStructure = accountKeys.reduce((acc, key) => {
-  //     return { ...acc, [key]: "" };
-  //   }, rowStructure);
-  // }
 
   const accountDataColumn = accountColumns(rowStructure);
   console.log("accountDataColumn", accountDataColumn);
@@ -141,8 +139,6 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
       ...(account as any),
     };
   });
-
-  // console.log("modifiedData", modifiedData);
 
   return (
     <div className="w-full">
