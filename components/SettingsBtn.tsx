@@ -39,6 +39,7 @@ import {
 import { useCurrentProgramStore } from "@/hooks/useCurrentProgram";
 import * as anchor from "@coral-xyz/anchor";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   clusterSlug: z.nativeEnum(Cluster, {
@@ -50,7 +51,7 @@ const FormSchema = z.object({
 export function SettingsBtn() {
   const { setCluster, setCustomCluster, cluster, getRpcUrl } =
     useClusterStore();
-  console.log("cluster", cluster);
+  const router = useRouter();
   const { setProgram, program } = useCurrentProgramStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -80,6 +81,7 @@ export function SettingsBtn() {
         const provider = anchor.getProvider() as anchor.AnchorProvider;
         const newProgram = new anchor.Program(program.idl, provider);
         setProgram(newProgram);
+        router.refresh();
       }
       toast({
         title: "Cluster Set SuccessFully",

@@ -75,10 +75,12 @@ function SidebarNav({ items }: SideBarNavProps) {
           );
         })}
       </nav>
+      {/* good to have feature is to allow a user to click this and change the cluster */}
       <nav className="mt-auto grid gap-4 p-2">
-        <div className="py-3 px-5 border border-gray-700 rounded-lg flex flex-row items-center bg-black shadow-md hover:bg-gray-800 transition duration-300 ease-in-out">
-          <span className="font-semibold text-base mr-2">Cluster -</span>
-          <span className="text-base ">{clusterDisplayName}</span>
+        <div className="py-3 px-5 border border-gray-800 rounded-2xl flex flex-row items-center bg-black shadow-md hover:bg-gray-800 transition duration-300 ease-in-out">
+          <span className=" h-3 w-3 animate-ping absolute inline-flex rounded-full bg-purple-600 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+          <span className="text-base pl-2 ">{clusterDisplayName}</span>
         </div>
         <Tooltip>
           <TooltipTrigger asChild>

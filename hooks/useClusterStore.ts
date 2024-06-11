@@ -67,7 +67,7 @@ export const TESTNET_URL = "https://api.testnet.solana.com";
 export const DEVNET_URL = "https://api.devnet.solana.com";
 export const LOCALHOST_URL = "http://localhost:8899";
 
-export const DEFAULT_CLUSTER = Cluster.Devnet;
+export const DEFAULT_CLUSTER = Cluster.Localnet;
 
 export interface RpcStore {
   cluster: Cluster;
