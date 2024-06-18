@@ -171,7 +171,7 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
       ...(account as any),
     };
   });
-  console.log("searchPubkey", searchPubkey);
+
   if (searchData && searchPubkey) {
     modifiedData = [
       {
@@ -179,10 +179,7 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
         ...(searchData as any),
       },
     ];
-    console.log("modifiedData", modifiedData);
   }
-
-  console.log("searchData", searchData);
 
   return (
     <div className="w-full">

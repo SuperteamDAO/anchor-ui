@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 function NoProgramFound() {
   return (
-    <div className="flex min-h-[89vh]  w-full  flex-col items-center justify-center">
+    <div className="flex h-full  w-full  flex-col items-center justify-center">
       <div className="flex flex-col items-center gap-1 text-center">
         <h3 className="text-2xl font-bold tracking-tight">
           You have not added any Programs yet

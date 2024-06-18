@@ -20,7 +20,7 @@ export default function AccountPage() {
   }, [cluster, idl?.accounts]);
 
   return (
-    <div className="flex  w-full h-full  flex-col ">
+    <div className="flex  w-full min-h-[89vh]  flex-col ">
       {idl?.accounts !== undefined && program !== null ? (
         <div className="py-2 px-4">
           <Tabs defaultValue={activeTab} className="w-full">

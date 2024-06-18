@@ -49,7 +49,7 @@ export function Client({ children }: { children: React.ReactNode }) {
         <SideBarNav items={navItems} />
         <div className="flex flex-col">
           <Header />
-          <main className="grid flex-1 gap-4 overflow-auto overscroll-none p-4 bg-muted/40 ">
+          <main className="flex-1 overflow-hidden p-4 bg-muted/40 h-[calc(100vh-57px)]">
             {children}
           </main>
         </div>
