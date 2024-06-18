@@ -1,7 +1,7 @@
 "use client";
-import { useAccountData } from "@/hooks/useAccountData";
+import { useAccountData, useOneAccountData } from "@/hooks/useAccountData";
 import * as anchor from "@coral-xyz/anchor";
-import React from "react";
+import React, { useState } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/table";
 import { IdlDefinedFieldsNamed } from "@coral-xyz/anchor/dist/cjs/idl";
 import { DataTableViewOptions } from "./toggleTable";
-import { Skeleton } from "@/components/ui/skeleton";
+import { LoadingSkeleton } from "./TableLoading";
+import SearchByPubkey from "./Search";
 
 type AccountTableProps = {
   accountName: string;
@@ -49,11 +50,13 @@ function accountColumns(rowStructure: Record<string, string>) {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  refetchData: () => void;
 }
 
 function DataTable<TData, TValue>({
   columns,
   data,
+  refetchData,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -64,7 +67,7 @@ function DataTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-2">
-      <DataTableViewOptions table={table} />
+      <DataTableViewOptions refetchData={refetchData} table={table} />
       <div className="rounded-md border min-w-full">
         <Table>
           <TableHeader>
@@ -119,156 +122,38 @@ function DataTable<TData, TValue>({
   );
 }
 
-const LoadingSkeleton = () => (
-  <>
-    <div className="flex flex-col gap-2">
-      <div className="items-center justify-center transition-colors border border-input px-3 ml-auto hidden h-8 lg:flex">
-        <Skeleton className="w-[32px] max-w-full" />
-      </div>
-      <div className="border min-w-full">
-        <div className="relative w-full overflow-auto">
-          <table className="w-full caption-bottom">
-            <thead className="[&amp;_tr]:border-b">
-              <tr className="border-b transition-colors">
-                <th className="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[128px] max-w-full" />
-                </th>
-                <th className="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[144px] max-w-full" />
-                </th>
-                <th className="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[104px] max-w-full" />
-                </th>
-                <th className="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[104px] max-w-full" />
-                </th>
-              </tr>
-            </thead>
-            <tbody className="[&amp;_tr:last-child]:border-0">
-              <tr className="border-b transition-colors">
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[64px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[56px] max-w-full" />
-                </td>
-              </tr>
-              <tr className="border-b transition-colors">
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[56px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[48px] max-w-full" />
-                </td>
-              </tr>
-              <tr className="border-b transition-colors">
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[56px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[48px] max-w-full" />
-                </td>
-              </tr>
-              <tr className="border-b transition-colors">
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[56px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[48px] max-w-full" />
-                </td>
-              </tr>
-              <tr className="border-b transition-colors">
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[56px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[48px] max-w-full" />
-                </td>
-              </tr>
-              <tr className="border-b transition-colors">
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[56px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[48px] max-w-full" />
-                </td>
-              </tr>
-              <tr className="border-b transition-colors">
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[352px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[64px] max-w-full" />
-                </td>
-                <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <Skeleton className="w-[56px] max-w-full" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </>
-);
-
 // Add Error Boundary for this page itself or this component
 function AccountTable({ accountName, idl, program }: AccountTableProps) {
   const typedAccountName = accountName as keyof typeof idl.accounts;
   console.log("Account Name", accountName);
   console.log("typedAccountName", typedAccountName);
-  const { data, isLoading, isError } = useAccountData(
+  const [searchPubkey, setSearchPubkey] = useState<string>("");
+  const { data, isLoading, isError, refetch, isRefetching } = useAccountData(
     program,
     typedAccountName
   );
-  console.log("data", data);
+  const { data: searchData, refetch: refetchSearchData } = useOneAccountData(
+    program,
+    typedAccountName,
+    searchPubkey
+  );
 
-  if (isLoading) return <LoadingSkeleton />;
+  const refetchAllAccountData = async () => {
+    setSearchPubkey("");
 
+    await refetch();
+  };
+
+  console.log("isRefetching", isRefetching);
+
+  if (isLoading || isRefetching) return <LoadingSkeleton />;
   if (isError) return <div>Failed to load data</div>;
 
-  const accountType = idl.types?.find((type) => type.name === accountName);
-  console.log("accountType", accountType);
+  const handleSearch = () => {
+    refetchSearchData();
+  };
 
+  const accountType = idl.types?.find((type) => type.name === accountName);
   let rowStructure: Record<string, string> = { account: "pubkey" };
 
   if (accountType?.type.kind === "struct") {
@@ -277,21 +162,42 @@ function AccountTable({ accountName, idl, program }: AccountTableProps) {
       rowStructure[field.name] = field.type as string;
     });
   }
-
   const accountDataColumn = accountColumns(rowStructure);
 
-  const modifiedData = data?.map((item) => {
+  let modifiedData = data?.map((item) => {
     const { account, publicKey } = item;
     return {
       account: publicKey.toString(),
       ...(account as any),
     };
   });
+  console.log("searchPubkey", searchPubkey);
+  if (searchData && searchPubkey) {
+    modifiedData = [
+      {
+        account: searchPubkey,
+        ...(searchData as any),
+      },
+    ];
+    console.log("modifiedData", modifiedData);
+  }
+
+  console.log("searchData", searchData);
 
   return (
     <div className="w-full">
       {modifiedData && (
-        <DataTable columns={accountDataColumn} data={modifiedData} />
+        <>
+          <SearchByPubkey
+            handleSearch={handleSearch}
+            setSearchValue={setSearchPubkey}
+          />
+          <DataTable
+            columns={accountDataColumn}
+            data={modifiedData}
+            refetchData={refetchAllAccountData}
+          />
+        </>
       )}
     </div>
   );

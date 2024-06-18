@@ -49,6 +49,11 @@ function SidebarNav({ items }: SideBarNavProps) {
     <aside className="inset-y w-[200px]  fixed  left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
         <ProgramSwitcher />
+        {/* <Link href={"/"}>
+          <p className="text-md py-2 text-base text-center font-semibold text-white">
+            Anchor Studio
+          </p>
+        </Link> */}
       </div>
       <nav className="grid gap-1.5 py-1 px-2 w-full mt-4">
         {items.map((item, idx) => {
