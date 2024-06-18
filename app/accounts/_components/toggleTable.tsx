@@ -12,6 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { RefreshCw } from "lucide-react";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
@@ -30,6 +31,7 @@ export function DataTableViewOptions<TData>({
         size="sm"
         onClick={refetchData}
       >
+        <RefreshCw className="mr-2 h-4 w-4" />
         Refresh
       </Button>
       <DropdownMenu>
